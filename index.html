@@ -1,13 +1,1 @@
-<p>Step 1. pip install robot framework and the ssh library in this case.</p>
-<p>sudo pip install robotframework<br />sudo pip install robotframework-sshlibrary</p>
-<p>Step 2. Create a text file with the test case/s to be run. This text file will contain keywords</p>
-<p>ecrehar@elxahkpv4m2:~/robot/me$ cat lshw_test.robot <br />*** Settings ***<br />Documentation I ssh to a node and check the out of lshw command.<br />... A particular PCI address should be in the output.</p>
-<p>Library SSHLibrary<br />Suite Setup Open Connection And Log In<br />Suite Teardown Close All Connections</p>
-<p>*** Variables ***<br />${HOST} 80.80.80.7<br />${USERNAME} ecrehar<br />${PASSWORD} **</p>
-<p>*** Test Cases ***<br />Check that the pci address of NIC is the expected one<br />[Documentation] In this test I ssh to a node and run lshw command.<br />... In the ouput I should find a particular PCI address.<br />${output}= Execute Command lshw -businfo -C network<br />Should Contain ${output} pci@0000:3a:00.0</p>
-<p>*** Keywords ***<br />Open Connection And Log In<br />Open Connection ${HOST}<br />Login ${USERNAME} ${PASSWORD}</p>
-<p>Step 3. Run the test and check the result and logs. nice html reports.</p>
-<p>ecrehar@elxahkpv4m2:~/robot/me$ robot lshw_test.robot <br />==============================================================================<br />Lshw Test :: I ssh to a node and check the out of lshw command. <br />==============================================================================<br />Check that the pci address of NIC is the expected one :: In this t... | PASS |<br />------------------------------------------------------------------------------<br />Lshw Test :: I ssh to a node and check the out of lshw command. | PASS |<br />1 critical test, 1 passed, 0 failed<br />1 test total, 1 passed, 0 failed<br />==============================================================================<br />Output: /home/ecrehar/robot/me/output.xml<br />Log: /home/ecrehar/robot/me/log.html<br />Report: /home/ecrehar/robot/me/report.html<br />ecrehar@elxahkpv4m2:~/robot/me$ </p>
-
-<img src="https://lh3.googleusercontent.com/sm4vaDjsdhIVEtQ3XHLXE1WpuHxDg6jpQ4MV5ChqzApW_kS5ChiEcoSxfcuUNG5Xv6ludrAjLenBWzTpa7rYA2FstIkA6vxOgUPP3RnuXq0KS1Qnskf1E5rw1o09SR4MnpwpRz07HehCo1a0Pf6iuTOpovuxrp-b9w51cvT5bPauRNVkJthvqNoxubKUlMju4PuH5bmhsgJJk3ZDTmd0SkCUV9fOqQTT7MAqQkITsNUQaxv0UxSvpVEYLVTRI3Mc_nO38kDd5OY1nFgNnBTWGhrkUE80oPoa4PaPQ15k5YA_8edMbwDQblMVTgxtcr7K15Yq7RBZ81CqWnNyDqQIHedgsEWCSwt5PkZ4Nbo-HuUp-dgcBsi1Rw7hWFj7utR_LAdEXF98yPQZ5DAXCSmJPqtjZXpZm1c-iosDfvFKv34cMRQ6zzkRvPALx_hrZtRnq6GGxtHnKyJvyB7SosrkxcOI0gDbouaRUah6gL74QN3iw3NbJ-48AGmpVR1Jgvb1-dYmuGe7EdqLa5PbE-_KIsmB-cQCAcIv6Cl4R3hRivHDdo3eN9ZA1CC9LtLfkCsj1tIdzsU_h44XqBItgMhjjWqcZmbzCKN6n6NqT3XTNZdkHjknTbeFynJG3hX4Olp_q5WN_qf2LHpXSzyN7vy8N0X7Qg=w836-h639-no
-" alt="test" class="center">
+Hello world
