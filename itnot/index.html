@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				
+<!––  Slide0 ––>				
+				<section>In the NIC of time: Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs
+                                    <aside class="notes">
+                                        Thank you, Daniel, for the (nice? warm?) introduction.
+                                    </aside>
+				</section>
+<!––  Slide1 ––>
+				<section>
+			        <img src="pics/slide1.png" width=70% height=70%></th>
+				    <aside class="notes">
+So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.
+I work at Ericsson as a systems manager. That's *systems* manager, so ... -advance to next slide-
+				    </aside>
+				</section>
+<!––  Slide2 ––>				
+				<section>
+			        <img src="pics/slide2_meeting.jpg" width=70% height=70%></th>
+				    <aside class="notes">
+... not this ... - advance to next slide - 
+
+				    </aside>
+				</section>
+<!––  Slide3 ––>	
+				<section>
+			        <img src="pics/slide3_HDS.jpg" width=70% height=70%></th>
+					<aside class="notes">
+but this ... - advance to next slide - 
+					</aside>
+				</section>
+<!––  Slide4 ––>	
+				<section>
+			        <img src="pics/slide3_datacenter.jpg" width=70% height=70%></th>
+					<aside class="notes">
+or this ... - advance to next slide - 
+					</aside>
+				</section>		
+<!––  Slide5 ––>			
+				<section>
+					<tr>
+					    <th><img src="pics/slide5_erlang.jpg" width=44% height=44%></th> 
+					    <th><img src="pics/slide5_bluetooth.png" width=25% height=25%></th>
+					</tr>
+					<tr>
+					<p>
+					    <th>40% of all mobile traffic</th>	
+					</p>
+				        </tr>
+					<aside class="notes">
+A quick one about ericsson -  40% mobile traffic, erlang, bluetooth - NOT DONE YET , need to write it - advance to next slide - 
+					</aside>
+				</section>
+<!––  Slide6 ––>	
+				<section>
+					<tr>
+					    <th><img src="pics/slide6_nfv.jpeg" width=50% height=50%></th>
+					    <th><img src="pics/slide6_openstack-logo.png" width=44% height=44%></th> 
+					</tr>
+
+					<aside class="notes">
+At Ericsson, we use OpenStack for virtual infrastructure management, as part of our NFVi solution. 
+Our customers are typically telecom operators ... well, and a taxi company ... in Dubai ... and Panasonic Avionics for entertainment on board of flights, and many other such examples. 
+What is NFVi? 
+For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
+NFV means, more or less, decoupling the SW from HW. It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
+Traces of this decoupling of the network functions from proprietary hardware appliances are there for many years now. 
+Around the year 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
+
+Some applications require high throughput and Ericsson's EPC is one notable example.
+EPC is the equivalent of formerly used GPRS, it is there to make mobile data traffic possible. It means you traverse it when surfing the internet from your mobile, or when watching youtube, Netflix, GoT, playing Pokemon?
+The monthly mobile data traffic grew close to 88% between Q4 2017 and Q4 2018, this is mainly due to the increased traffic per smartphone in China. - advance to next slide - 
+					</aside>
+				</section>
+<!––  Slide7 ––>	
+				<section>
+					<tr>
+					    <th><img src="pics/slide7_smartNIC.png" width=100% height=100%></th>
+					</tr>
+					<aside class="notes">
+This is how a smartNIC looks like !
+
+To cope with this increase in traffic, we are looking at using smartNICs in Openstack on top of which we run vEPC in VMs. 
+What is a smartNIC?
+A smartNIC is a NIC capable of offloading processing from the host CPU. To be able to do this, it can have its own CPU, memory and flash storage embedded on the card. 
+To offload processing from CPU, a smartNIC will, for instance, run the ovs control and data plane, a firewall or performance acceleration techniques, *inside* the NIC. (That is, you will run your ovs-vsctl show commands while logged in to the NIC). - advance to next slide - 
+					</aside>
+				</section>				
+<!––  Slide8 ––>
+                                <section>
+                                        <tr>
+                                            <th><img src="pics/slide8_intel.png" width=44% height=44%></th>
+                                            <th><img src="pics/slide8_mellanox.jpg" width=25% height=25%></th>
+                                        </tr>
+                                        <tr>
+                                        <tr>
+                                            <th><img src="pics/slide8_Broadcom.jpg" width=44% height=44%></th>
+					</tr>
+					<tr>
+                                            <th><img src="pics/slide8_netronome.png" width=44% height=44%></th>
+                                        </tr>
+                                        <aside class="notes">
+There are quite a few types of smartNICs, ranging from thousands to a few hundred dollars(some you can buy on eBay).
+
+Some smartNICs use an FPGA (Field Programmable Gate Array) mounted on the PCIe network card. Using FPGA boards provides flexibility, they can be easily programmed and updated once installed. (P4-Programmable Protocol-independent Packet Processor- can be used for programming packet forwarding planes.)
+
+Some smartNICs do not use an FPGA, they are less flexible but still capable of doing lots of things, at a significantly lower price. 
+
+SmartNICs might use ARM CPUs in a RISC architecure or x86 CPUs, different amounts of RAM, they can consume more or less power.
+SmartNICs can have different form factors HHHL(half hight half lenght) if you need to fit it in a 2Us compute  or FHFL full hight full lenght for wider than 2Us computes.
+
+You can opt for 2 or 4 X 25, 4X 50, 2 X 100 Gbps ports, that is two ports (cages) on a NIC wifh HHHL form factor and  4 ports on NICs with FHFL form factor. 
+You have options around the number of PCI lanes to be used, x8 or x16.  - advance to next slide - 
+                                        </aside>
+                                </section>
+
+<!––  Slide9 ––>
+                                <section>
+                                        <tr>
+					 <p>Is it a bird? is it a plane? It's SmartNIC !</p>
+                                        </tr>
+                                        <aside class="notes">
+Is it a bird? is it a plane? It's SmartNIC !
+
+How should your architecture look like when using smartNICs.
+
+You could use one smartNIC for data per compute, we're talking 2x100 Gbps here, that's *a lot* of bandwidth.
+In this case, high availability happens at compute level, not at network card level. 
+
+What if you have a dual socket system. If you plug a smartNIC in a PCIe socket, applications might not like crossing that QPI link (from 2017 called UPI) between the CPUs.
+In this case you can look into using a bifurcated smartNIC, that's basically splitting the card in two physical pieces that you can insert in two PCIe slots, one per NUMA node.
+
+If you use two smartNICs, do you want two separate ovs controllers in your compute? will OpenStack even support that? 
+
+What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini server?
+Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux on them. Then you need something like IPMI, we're talking rather something like a linux server here than an embedded linux. 
+
+What security concerns are raised with introducing a smartNIC with linux running on it. I'm looking at you, Kim!
+
+When should you use a smartNIC?
+(Intel info) If on your host you use more than 4CPUs for OVS, then you should switch to using smartNICs, it makes sense from a business point of view. - advance to next slide - 
+                                        </aside>
+                                </section>
+
+<!––  Slide10 ––>
+                                <section> Openstack working with SmartNICs
+                                        <aside class="notes">
+Openstack working with SmartNICs - TO BE ADDED
+Openstack support for smartNICs starting with Rocky, Stein - TO BE ADDED
+Neutron integration with SmartNICs - TO BE ADDED
+Openstack Cyborg for integrating FPGAs with openstack - TO BE ADDED 
+- advance to next slide - 
+                                        </aside>
+                                </section>
+
+<!––  Slide11 ––>
+                                <section> Performance
+                                        <aside class="notes">
+Jumping between kernel space and user space cost on performance - TO BE ADDED
+Mention eBPF with XDP kernel hook,  DPDK etc .. TO BE ADDED 
+Native VirtIO driver benefits - TO BE ADDED
+- advance to next slide - 
+                                        </aside>
+                                </section>
+<!––  Slide12 ––>
+                                <section> smartNICs with Storage
+                                        <aside class="notes">
+smartNICs with Storage - TO BE ADDED
+NVMe ov TCP , Roce v2
+- advance to next slide - 
+                                        </aside>
+                                </section>
+<!––  Slide13 ––>
+                                <section> Ericsson customers are running on Openstack. 
+                                        <aside class="notes">
+List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
+- advance to next slide - 
+                                        </aside>
+                                </section>
+<!––  Slide14 ––>
+                                <section> Thank you part 1
+                                        <aside class="notes">
+ Before we take a break and grab those beers, kindly arranged by CN, I have two things to add.
+1. I'd like to express my deepest gratitude to a person that inspires me quite a lot. Many of you know him, his name is FH and if you have never heard about this person, you're missing out... big time. I  attended one of his hands on workshops at OpenStack Nordics, by chance, then I found him on Twitter, then on YouTube, then I found his awesome blog. In the spirit of sharing my astounding discovery, I ran to my colleagues ”have y’all seen this guys blog???” Some of them replied ” oh yeah, we've been reading his posts for years, he's really good!!” Argh, the kind of valuable information people don't share. Seriously, check out his talks on YouTube and his blog! 
+- advance to next slide - 
+                                        </aside>
+                                </section>
+<!––  Slide15 ––>
+                                <section> Thank you part 2
+                                        <aside class="notes">
+2. Secondly, it's my desire to leave you with a thought. 
+I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
+In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
+Many customers asked to move their web servers and mail servers on our premises.
+It was because their services would access directly the big pipe and we had a generator. 2001 Eastern European country meant many power outages,
+
+They would bring desktop tower PCs we had a room with tables against the wall and we lined up the towers on these tables. Soon enough, we ran out of physical space on those tables and bought racks. We asked customers to buy rackable servers in order to host with us, then we ran out of space again and somewhere 2005 we started using VMs. 
+Fast forward, today our datacenters are collections of those stacked boxes that used to be desktop computers. To me, this is insane, does it make any sense to you? Should we go down the timeline of computer history and have racks of disks and racks of memory and CPU and racks of NICs?
+- advance to next slide -
+                                        </aside>
+                                </section>
+<!––  SlideX ––>	
+				<section> To DELETE
+					<tr>
+					    <th><img src="pics/slide8_intel-ericsson-logo.jpg" width=100% height=100%></th>
+					</tr>
+					<aside class="notes">
+					At Ericsson,
+					</aside>
+				</section>
+<!––  SlideX ––>	
+                <section data-background-color="#FFC0CB">To DELETE
+                                        <tr>
+                                            <th><img src="pics/me.jpg" width=27% height=27%></th>
+                                            <th><img src="pics/j.jpg" width=35% height=35%></th>
+                                        </tr>
+				</section>
+                <section data-background-color="#FFC0CB">To DELETE
+                                        <p>
+					 DPDK/SPDK
+                                        </p>
+                </section>
+                <section data-background-color="#FFC0CB" >To DELETE
+                                        <p>
+                                                <img src="pics/sn.png" width=75% height=75%>
+
+                                        </p>    
+               </section> 
+               <section data-background-color="#FFC0CB" >To DELETE
+                                        <p>
+                                                <img src="pics/kernel-diag-ascii.svg" width=35% height=35%>
+                                        </p>
+               </section> 
+               <section data-background-color="#FFC0CB">To DELETE
+                                        <p>
+                                           PCI bifurcation
+                                        </p>
+               </section>
+               <section data-background-color="#FFC0CB">To DELETE
+                                        <p>
+                                                <img src="pics/termtosvg_5xxaxp7l.svg" width=60% height=60%>        
+                                        </p>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,253 @@
+
+Slide0 
+In the NIC of time: Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs
+
+Slide1 
+
+Thank you, Daniel, for the (nice? warm?) introduction. 
+So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.
+I work at Ericsson as a systems manager. That's *systems* manager, so ... <advance to next slide>
+
+Slide2 
+... not this ... - advance to next slide - 
+
+Slide3
+but this ... - advance to next slide - 
+
+Slide4
+or this ... - advance to next slide - 
+
+Slide5
+A quick one about ericsson -  40% mobile traffic, erlang, bluetooth - NOT DONE YET , need to write it - advance to next slide - 
+
+
+Slide6
+
+At Ericsson, we use OpenStack for virtual infrastructure management, as part of our NFVi solution. 
+Our customers are typically telecom operators ... well, and a taxi company ... in Dubai ... and Panasonic Avionics for entertainment on board of flights, and many other such examples. 
+What is NFVi? 
+For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
+NFV means, more or less, decoupling the SW from HW. It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
+Traces of this decoupling of the network functions from proprietary hardware appliances are there for many years now. 
+Around the year 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
+
+Some applications require high throughput and Ericsson's EPC is one notable example.
+EPC is the equivalent of formerly used GPRS, it is there to make mobile data traffic possible. It means you traverse it when surfing the internet from your mobile, or when watching youtube, Netflix, GoT, playing Pokemon?
+The monthly mobile data traffic grew close to 88% between Q4 2017 and Q4 2018, this is mainly due to the increased traffic per smartphone in China. - advance to next slide - 
+
+
+Slide7
+Let's see how one of these smartNIC babies looks like!
+
+To cope with this increase in traffic, we are looking at using smartNICs in Openstack on top of which we run vEPC in VMs. 
+What is a smartNIC?
+A smartNIC is a NIC capable of offloading processing from the host CPU. To be able to do this, it can have its own CPU, memory and flash storage embedded on the card. 
+To offload processing from CPU, a smartNIC will, for instance, run the ovs control and data plane, a firewall or performance acceleration techniques, *inside* the NIC. (That is, you will run your ovs-vsctl show commands while logged in to the NIC). - advance to next slide - 
+
+Slide8
+
+There are quite a few types of smartNICs, ranging from thousands to a few hundred dollars(some you can buy on eBay).
+
+Some smartNICs use an FPGA (Field Programmable Gate Array) mounted on the PCIe network card. Using FPGA boards provides flexibility, they can be easily programmed and updated once installed. (P4-Programmable Protocol-independent Packet Processor- can be used for programming packet forwarding planes.)
+
+Some smartNICs do not use an FPGA, they are less flexible but still capable of doing lots of things, at a significantly lower price. 
+
+SmartNICs might use ARM CPUs in a RISC architecure or x86 CPUs, different amounts of RAM, they can consume more or less power.
+SmartNICs can have different form factors HHHL(half hight half lenght) if you need to fit it in a 2Us compute  or FHFL full hight full lenght for >2Us computes.
+
+You can opt for 2 or 4 X 25, 4X 50, 2 X 100 Gbps ports, that is two ports (cages) on a NIC wifh HHHL form factor and  4 ports on NICs with FHFL form factor. 
+You have options around the number of PCI lanes to be used, x8 or x16.  - advance to next slide - 
+
+
+Slide9 
+Is it a bird? is it a plane? It's SmartNIC !
+
+How should your architecture look like when using smartNICs.
+
+You could use one smartNIC for data per compute, we're talking 2x100 Gbps here, that's *a lot* of bandwidth.
+Typically high availability is done at compute level, not at network card level. 
+
+That might not work for us at least, because all our systems are dual socket. If you plug a smartNIC in a PCIe socket, EPC will be really upset if you start crossing that QPI link (from 2017 called UPI) between the CPUs.
+In this case you can look into using a bifurcated smartNIC, that's basically splitting the card in two physical pieces that you can insert in two PCIe slots, one per NUMA node.
+
+If you use two smartNICs, do you want two separate ovs controllers in your compute? will OpenStack even support that? 
+
+What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini server?
+Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux on them. Then you need something like IPMI, we're talking rather something like a linux server here than an embedded linux. 
+
+When should you use a smartNIC?
+(Intel info) If on your host you use more than 4CPUs for OVS, then you should switch to using smartNICs, it makes sense from a business point of view. - advance to next slide - 
+
+Slide 10
+
+Openstack working with SmartNICs - TO BE ADDED
+Openstack support for smartNICs starting with Rocky, Stein - TO BE ADDED
+Neutron integration with SmartNICs - TO BE ADDED
+Openstack Cyborg for integrating FPGAs with openstack - TO BE ADDED 
+- advance to next slide - 
+
+Slide11 
+
+Jumping between kernel space and user space cost on performance - TO BE ADDED
+Mention eBPF with XDP kernel hook,  DPDK etc .. TO BE ADDED 
+Native VirtIO driver benefits - TO BE ADDED
+- advance to next slide - 
+
+Slide12
+smartNICs with Storage 
+
+smartNICs with Storage - TO BE ADDED
+NVMe ov TCP , Roce v2
+- advance to next slide - 
+
+Slide13
+Ericsson customers are running on Openstack on.
+ 
+List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
+- advance to next slide - 
+
+Slide 15 
+Thank you part 1
+
+ Before we take a break and grab those beers, kindly arranged by CN, I have two things to add.
+1. I'd like to express my deepest gratitude to somebody that has encouraged me to come up here and talk. Many of you know him, his name is FH and if you have never heard about this person, you're missing out... big time. I  attended one of his hands on workshops at OpenStack Nordics, by chance, then I found him on Twitter, then on YouTube, then I found his awesome blog. In the spirit of sharing my astounding discovery, I ran to my colleagues ”have y’all seen this guys blog???” Some of them replied ” oh yeah, we've been reading his posts for years, he's really good!!” Argh, the kind of valuable information people don't share. Seriously, check out his talks on YouTube and his blog! 
+- advance to next slide - 
+
+Slide 16 
+Thank you part 2 
+- advance to next slide - 
+
+2. Secondly, it's my desire to leave you with a thought. 
+I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
+In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
+Many customers asked to move their web servers and mail servers on our premises.
+It was because their services would access directly the big pipe and we had a generator. 2001 Eastern European country meant many power outages,
+
+They would bring desktop tower PCs we had a room with tables against the wall and we lined up the towers on these tables. Soon enough, we ran out of physical space on those tables and bought racks. We asked customers to buy rackable servers in order to host with us, then we ran out of space again and somewhere 2005 we started using VMs. 
+Fast forward, today our datacenters are collections of those stacked boxes that used to be desktop computers. To me, this is insane, does it make any sense to you? Should we go down the timeline of computer history and have racks of disks and racks of memory and CPU and racks of NICs?
+- advance to next slide - 
+
+
+===========
+
+
+??PICTURE EXAMPLE OF P4 programm??
+https://github.com/p4lang/p4-spec/blob/master/p4-16/discussions/simple-switch-example.p4
+
+"Speaking of programmability, P4 is very much in line with Network Function Virtualization (NFV), since the main goal of NFV is to bring similar disrupt networks as software virtualization brought to the world of computing. P4 enables rapid changes of the way packets are processed by the network and these changes are purely on a software side. Therefore, it is possible to deploy new network protocols, new services and applications using the hardware that is already in place."
+
+The firewall mentioned above filters all network packets against a table built specifically for each local Internet Protocol (IP) address under control. An application processing network traffic is required to register a numerical network port. This port then becomes the internal address to send and receive network traffic. Filtering at the application level then becomes a simple process of only permitting traffic for specific numeric network ports. The industry has labeled this “application network segmentation,” and in this instance, it is done entirely in the NIC. So How does this assist the host x86 CPU? It turns out that by the point at which operating system software filtering kicks in the host CPU has often expended over 10K CPU cycles to process a packet. If the packet is dropped the cost of that drop is 10K lost host CPU cycles. If that filtering was done in the NIC, and the packet was then dropped there would be NO host CPU impact.
+
+https://technologyevangelist.co/2017/07/17/whats-a-smart-nic/
+
+
+
+
+
+"offloads and accelerates datapath processing in the Ericsson NFVi solution, freeing up CPU cores for vital revenue generating applications while keeping virtual machines (VMs) and virtual network functions (VNFs) hardware independent for fast onboarding and optimum placement in the server infrastructure. With relentless increase in mobile data traffic rates and the advent of 5G speeds, this innovative solution gives the Telco operators a powerful tool to improve performance across the wide range of NFV and IT workloads while improving the utilization of the server infrastructure.
+
+"According to an Ericsson Mobility Report
+
+Netronome and Ericsson have worked together to upstream support for NFVi acceleration into the Linux, OpenStack, Open vSwitch, Open Daylight, and OPNFV communities.
+
+Netronome you can buy it on e-bay 
+ 
+
+
+Talk high level about smart nics why we need them,the diff types
+
+now we have openstack and the apps we move to run in VMs hence perf problems, we have scalability 
+denver openstack to approve the concept with smartnic
+cyborg project 
+redhat working with intel for this 
+https://wiki.openstack.org/wiki/Cyborg
+passive cooling no fläkt to save power , air flow goes through
+pcie bifurcation
+native virtio no vendor specific driver
+vxlan tunnel endpoint inside the fpga
+we cannot have NAT some of the VNFs are routers
+can one ovs manage two smartnics on a host , which we need to be connected to two diff switches, for HA	
+
+also all diff smartnics out there, with or without FPGA , with ARM procs, x86 procs for netronome , diff linux versions on them , diff ram , with diff price range, active cooling passive cooling
+talk about partitioning the cores to use some dedicated to some OS for management reasons
+
+it's a linux on smart nic like embedded linux , and if you want ipmi and so on, then it is more like a mini linux server , which maybe a smartnic should not be 
+is the smartnic a server or is the smartnic a nic? -  linux running on the nic opens up to a discussion, what is this thing, embedded linux or a mini server :) 
+Running linux inside the NIC opens to soooo many questions, how are we pxe booting all NICs so we install a whole new linux on them, is it ipmi, then it is a mini linux server, is it an agent on the host , how manual is it then and hard to be automated etc ....
+
+with many megaflow rules, tc in the kernel the tc code there was a o n squre complexity and they made it lower nlog(n)? and not a performance issue anymore
+
+	
+	
+	
+	
+SlideX 
+Linux kernel limitations and alternatives
+jumping from kernel space to user space back and forth
+XDP and eBPF 
+
+SlideX
+More details about smart nics and the integration with openstack
+Good to move OVS in the nic, mention dimensioning problems with OVS being killed by oom killer, 'cause it's always at the top of htop
+Mention moving neutron agent in the NIC , did Intel said they moved nova agent in the NIC as well?
+Mention Rocky Stein having support for it. 
+Maybe show config files. 
+
+
+SlideX
+What we are running on Openstack on Ericsson customers. List some operators, the olympics in Japan with docomo, etc 
+
+SlideX
+[PIC FH Twitter account maybe]
+ Before we take a break and grab those beers, kindly arranged by CN, I have two things to add.
+1. I'd like to express my deepest gratitude to somebody that has encouraged me to come up here and talk. Many of you know him, his name is FH and if you have never heard about this person, you're missing out... big time. I  attended one of his hands on workshops at OpenStack Nordics, by chance, then I found him on Twitter, then on YouTube, then I found his awesome blog. In the spirit of sharing my astounding discovery, I ran to my colleagues ”have y’all seen this guys blog???” Some of them replied ” oh yeah, we've been reading his posts for years, he's really good!!” Argh, the kind of valuable information people don't share. Seriously, check out his talks on YouTube and his blog! 
+
+SlideX
+[PIC Show the magnetic core memory next to the Cascade Glacier NIC]
+2. Secondly, it's my desire to leave you with a thought. 
+I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
+In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
+Many customers asked to move their web servers and mail servers on our premises.
+It was because their services would access directly the big pipe and we had a generator. 2001 Eastern European country meant many power outages,
+
+They would bring desktop tower PCs we had a room with tables against the wall and we lined up the towers on these tables. Soon enough, we ran out of physical space on those tables and bought racks. We asked customers to buy rackable servers in order to host with us, then we ran out of space again and somewhere 2005 we started using VMs. 
+Fast forward, today our datacenters are collections of those stacked boxes that used to be desktop computers. To me, this is insane, does it make any sense to you? Should we go down the timeline of computer history and have racks of disks and racks of memory and CPU and racks of NICs?
+
+
+
+
+XDP 
+kernel component, hook, for doing fast packet processing
+
+XDP support in the kernel is made available through CONFIG_BPF_SYSCALL. XDP is shipped in the kernel since v4.8, and it’s usually enabled by default.
+
+CONFIG_BPF_SYSCALL
+root@cic-3:/boot# grep CONFIG_BPF_SYSCALL config-4.15.0-46-generic 
+CONFIG_BPF_SYSCALL=y
+
+root@cic-3:/boot# uname  -r
+4.15.0-46-generic
+
+
+=============================================================================================================================================
+Ref
+https://specs.openstack.org/openstack/neutron-specs/specs/stein/neutron-ovs-agent-support-baremetal-with-smart-nic.html 
+https://www.datacenterknowledge.com/networks/do-smart-network-cards-have-future-outside-hyperscale-data-center
+https://www.datacenterknowledge.com/networks/smartnics-are-complicated-so-intel-pitches-nics-are-smart-enough
+https://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-136.pdf
+VS-2.7-branch with generic hw offload feature can be found at Github : https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_napatech_ovs_tree_2.7-2Dhw-2Dof
+https://www.youtube.com/watch?v=IKmCfZB73Qk Cyborg - Nova integration forum Open Infra Summit 2019 Denver
+https://www.netronome.com/press-releases/ericsson-nfv-infrastructure-solution-integrated-with-netronome-agilio-smartnic-platform-delivers-high-operational-efficiency/
+https://www.ericsson.com/en/blog/2018/7/ericsson-reaching-milestone-of-100-commercial-vepc-customers
+https://www.ericsson.com/en/mobility-report/reports/q4-update-2018
+https://technologyevangelist.co/2017/07/17/whats-a-smart-nic/
+https://www.netcope.com/en/blog/p4-in-fpga-data-forwarding
+https://open-nfp.org/the-classroom/p4-ebpf-and-linux-tc-offload/
+https://open-nfp.org/media/documents/Open_NFP_P4_EBPF_Linux_TC_Offload_FINAL_5JHLETS.pdf
+https://p4.org/assets/P4_tutorial_01_basics.gslide.pdf
+https://technologyevangelist.co/2017/07/17/whats-a-smart-nic/
+https://en.wikipedia.org/wiki/SerDes
+https://cotscomputers.com/blog/pcie-lanes/
+https://blogs.igalia.com/dpino/2019/01/07/a-brief-introduction-to-xdp-and-ebpf/
+
+

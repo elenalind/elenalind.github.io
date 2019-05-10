@@ -1,0 +1,185 @@
+root@FPA1066GX-DA2:~# cat /etc/os-release 
+ID="fpa1066gx"
+NAME="Wind River Linux"
+VERSION="0.10.0.00030"
+VERSION_ID="0.10.0.00030"
+PRETTY_NAME="Wind River Linux 0.10.0.00030"
+root@FPA1066GX-DA2:~# 
+
+
+root@FPA1066GX-DA2:~# cat /etc/os-release 
+ID="fpa1066gx"
+NAME="Wind River Linux"
+VERSION="0.10.0.00030"
+VERSION_ID="0.10.0.00030"
+PRETTY_NAME="Wind River Linux 0.10.0.00030"
+root@FPA1066GX-DA2:~# cat /proc/cpu
+cat: read error: Is a directory
+root@FPA1066GX-DA2:~# cat /proc/cpuinfo 
+processor	: 0
+model name	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 200.00
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x4
+CPU part	: 0xc09
+CPU revision	: 1
+
+processor	: 1
+model name	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 200.00
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x4
+CPU part	: 0xc09
+CPU revision	: 1
+
+Hardware	: Altera SOCFPGA Arria10
+Revision	: 0000
+Serial		: 0000000000000000
+
+
+[cloud@dut5 ~]$ ssh root@10.80.15.107  
+Last login: Mon Jan 12 21:59:38 1970 from 10.80.15.68
+root@FPA1066GX-DA2:~# 
+root@FPA1066GX-DA2:~# ovs-vsctl show
+88ddfb44-4fb5-43f8-99fa-6e6be2df8458
+    Bridge "br0"
+        Port "eth0.131"
+            Interface "eth0.131"
+        Port "eth0.140"
+            Interface "eth0.140"
+        Port "eth0.146"
+            Interface "eth0.146"
+        Port "eth0.180"
+            Interface "eth0.180"
+        Port "eth0.132"
+            Interface "eth0.132"
+        Port "eth0.188"
+            Interface "eth0.188"
+        Port "eth0.160"
+            Interface "eth0.160"
+        Port "eth0.159"
+            Interface "eth0.159"
+        Port "eth0.190"
+            Interface "eth0.190"
+        Port "eth0.155"
+            Interface "eth0.155"
+        Port "eth0.138"
+            Interface "eth0.138"
+        Port "eth0.128"
+            Interface "eth0.128"
+        Port "eth0.185"
+            Interface "eth0.185"
+        Port "eth0.167"
+            Interface "eth0.167"
+        Port "eth0.133"
+            Interface "eth0.133"
+        Port "eth0.166"
+            Interface "eth0.166"
+        Port "eth0.178"
+            Interface "eth0.178"
+        Port "eth0.150"
+            Interface "eth0.150"
+        Port "eth0.177"
+            Interface "eth0.177"
+        Port "eth0.139"
+            Interface "eth0.139"
+        Port "eth0.135"
+            Interface "eth0.135"
+        Port "eth0.182"
+            Interface "eth0.182"
+        Port "eth0.127"
+            Interface "eth0.127"
+        Port "eth0.179"
+            Interface "eth0.179"
+        Port "eth0.172"
+            Interface "eth0.172"
+        Port "eth0.174"
+            Interface "eth0.174"
+        Port "eth0.144"
+            Interface "eth0.144"
+        Port "eth0.158"
+            Interface "eth0.158"
+        Port "eth0.164"
+            Interface "eth0.164"
+        Port "eth0.147"
+            Interface "eth0.147"
+        Port "eth0.176"
+            Interface "eth0.176"
+        Port "eth0.129"
+            Interface "eth0.129"
+        Port "eth0.149"
+            Interface "eth0.149"
+        Port "eth0.130"
+            Interface "eth0.130"
+        Port "eth0.141"
+            Interface "eth0.141"
+        Port "eth0.152"
+            Interface "eth0.152"
+        Port "eth0.142"
+            Interface "eth0.142"
+        Port "eth0.157"
+            Interface "eth0.157"
+        Port "eth0.169"
+            Interface "eth0.169"
+        Port "eth0.165"
+            Interface "eth0.165"
+        Port "eth0.143"
+            Interface "eth0.143"
+        Port "eth0.187"
+            Interface "eth0.187"
+        Port "eth0.136"
+            Interface "eth0.136"
+        Port "eth0.162"
+            Interface "eth0.162"
+        Port "eth0.151"
+            Interface "eth0.151"
+        Port "eth0.173"
+            Interface "eth0.173"
+        Port "eth0.189"
+            Interface "eth0.189"
+        Port "eth0.145"
+            Interface "eth0.145"
+        Port "eth0.168"
+            Interface "eth0.168"
+        Port "eth0.171"
+            Interface "eth0.171"
+        Port "eth0.181"
+            Interface "eth0.181"
+        Port "eth0.161"
+            Interface "eth0.161"
+        Port "eth0.184"
+            Interface "eth0.184"
+        Port "eth0.163"
+            Interface "eth0.163"
+        Port "eth0.183"
+            Interface "eth0.183"
+        Port "eth0.175"
+            Interface "eth0.175"
+        Port "eth0.137"
+            Interface "eth0.137"
+        Port "eth0.153"
+            Interface "eth0.153"
+        Port "eth0.148"
+            Interface "eth0.148"
+        Port "eth0.134"
+            Interface "eth0.134"
+        Port "eth0.186"
+            Interface "eth0.186"
+        Port "br0"
+            Interface "br0"
+                type: internal
+        Port "eth0.156"
+            Interface "eth0.156"
+        Port "eth0.101"
+            Interface "eth0.101"
+        Port "eth0.170"
+            Interface "eth0.170"
+        Port "eth0.154"
+            Interface "eth0.154"
+
+
+
