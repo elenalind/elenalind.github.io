@@ -1,0 +1,716 @@
+Slide1 
+Pink because I dont recall seeing a presentation in pink background yet, though pink is *not* my favorite color.
+
+Slide2
+40% of world wide mobile traffic goes through Ericsson SW
+Erlang, used by rabbitmq is EricssonLanguage open sourced by Ericsson
+Bluetooth invented by /// 
+maybe add others
+
+Slide3
+pic1 -Last time on customer site May 2017,  in London ... actually Slough, which is *not* London.
+pic2 - with my kid on site, a whole Sunday,  installing Openstack for MWC
+Waiting for better pic from Martin
+
+Slide4
+DPDK/SDPK Data and Storage acceleration
+
+XDP/BPF
+
+XDP
+kernel component, hook, for doing fast packet processing
+
+XDP support in the kernel is made available through CONFIG_BPF_SYSCALL. XDP is shipped in the kernel since v4.8, and it’s usually enabled by default.
+
+
+CONFIG_BPF_SYSCALL
+root@cic-3:/boot# grep CONFIG_BPF_SYSCALL config-4.15.0-46-generic
+CONFIG_BPF_SYSCALL=y
+
+AF_XDP is a new socket family that relies on XDP to pass a packet from kernel-space to user-space using zero-copy. 
+
+Zero-copy is an operation where the CPU does not copy data from one memory area to another. This is done to save CPU cycles and memory bandwidth when transmitting a filve over a network.
+
+root@cic-3:/boot# uname  -r
+4.15.0-46-generic
+
+
+
+Slide5 
+Openstack with SmartNICs
+Cascade Glacier
+
+[cloud@dut5 ~]$ lshw -C network -businfo
+WARNING: you should run this program as super-user.
+Bus info          Device      Class          Description
+========================================================
+pci@0000:03:00.0  ens15f0     network        Ethernet Controller 10-Gigabit X540-AT2
+pci@0000:03:00.1  ens15f1     network        Ethernet Controller 10-Gigabit X540-AT2
+pci@0000:81:00.0  ens3f0      network        82599ES 10-Gigabit SFI/SFP+ Network Connection
+pci@0000:81:00.1  ens3f1      network        82599ES 10-Gigabit SFI/SFP+ Network Connection
+pci@0000:83:00.0  ens4f0      network        82576 Gigabit Network Connection
+pci@0000:83:00.1  ens4f1      network        82576 Gigabit Network Connection
+pci@0000:86:00.0              network        Virtio network device
+pci@0000:86:00.1              network        Intel Corporation
+pci@0000:86:00.2              network        Virtio network device
+pci@0000:86:00.3              network        Virtio network device
+                  virbr0-nic  network        Ethernet interface
+                  virbr0      network        Ethernet interface
+WARNING: output may be incomplete or inaccurate, you should run this program as super-user.
+[cloud@dut5 ~]$ 
+
+root@FPA1066GX-DA2:~# cat /etc/os-release 
+ID="fpa1066gx"
+NAME="Wind River Linux"
+VERSION="0.10.0.00030"
+VERSION_ID="0.10.0.00030"
+PRETTY_NAME="Wind River Linux 0.10.0.00030"
+
+
+
+root@FPA1066GX-DA2:~# cat /proc/cpuinfo 
+processor	: 0
+model name	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 200.00
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x4
+CPU part	: 0xc09
+CPU revision	: 1
+
+processor	: 1
+model name	: ARMv7 Processor rev 1 (v7l)
+BogoMIPS	: 200.00
+Features	: half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32 
+CPU implementer	: 0x41
+CPU architecture: 7
+CPU variant	: 0x4
+CPU part	: 0xc09
+CPU revision	: 1
+
+Hardware	: Altera SOCFPGA Arria10
+Revision	: 0000
+Serial		: 0000000000000000
+
+
+
+
+
+Slide6
+PCI bifurcation to accomodate 2 NUMA nodes, no need for traffic to cross the qpi link
+ex Mellanox(Nvidia?), Intel
+To me this is a pretty basic requirement, it is a bit strange that we have to ask for it.
+Of course if you want high performance, you want to avoid traversing the QPI link. 
+
+root@compute-0-5:~# cpu_layout.py 
+======================================================================
+Core and Socket Information (as reported by '/sys/devices/system/cpu')
+======================================================================
+
+cores =  [0, 1, 2, 3, 4, 8, 9, 10, 11, 12, 16, 17, 18, 19, 20, 24, 25, 26, 27, 28]
+sockets =  [0, 1]
+
+        Socket 0        Socket 1       
+        --------        --------       
+Core 0  [0, 40]         [20, 60]       
+Core 1  [1, 41]         [21, 61]       
+Core 2  [2, 42]         [22, 62]       
+Core 3  [3, 43]         [23, 63]       
+Core 4  [4, 44]         [24, 64]       
+Core 8  [5, 45]         [25, 65]       
+Core 9  [6, 46]         [26, 66]       
+Core 10 [7, 47]         [27, 67]       
+Core 11 [8, 48]         [28, 68]       
+Core 12 [9, 49]         [29, 69]       
+Core 16 [10, 50]        [30, 70]       
+Core 17 [11, 51]        [31, 71]       
+Core 18 [12, 52]        [32, 72]       
+Core 19 [13, 53]        [33, 73]       
+Core 20 [14, 54]        [34, 74]       
+Core 24 [15, 55]        [35, 75]       
+Core 25 [16, 56]        [36, 76]       
+Core 26 [17, 57]        [37, 77]       
+Core 27 [18, 58]        [38, 78]       
+Core 28 [19, 59]        [39, 79]       
+
+
+Slide7 
+On the NIC:
+dual-core ARM, RISC proc similar to what you have in your mobile phone
+centos or wind river linux with busybox 
+flash disks
+2x25 / 2x50/ 2x100 GbE connectors
+ovs control plane running inside the nic
+
+Talk about the booting sequence
+
+NIC as virtio block device in host OS
+
+kernel bypass with a hook in eXpress Data Path, to skip the kernel's networking layer
+eBFP (Berkeley Packet Filtering) to do sort of what iptables does 
+
+SlideX - final - before demo 
+At the end mention 2 things 
+That everything we learn is provisional and open to recantation and refutation, so we should constantly question things . 
+That I want to thank Fl Haas for encouranging me to "speak up" or put on some blog all the stories. 
+
+
+SlideX
+Short demo with logging in the nic, showing some ovs flows. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================================
+A brief introduction to XDP and eBPF
+Continuing with the XDP series, in this post I briefly introduce this new technology. Then I focus on BPF and eBPF, which are fundamental to understand XDP
+Posted by Diego Pino García on January 7, 2019
+In a previous post I explained how to build a kernel with XDP (eXpress Data Path) support. Having that feature enabled is mandatory in order to use it. XDP is a new Linux kernel component that highly improves packet processing performance.
+
+In the last years, we have seen an upraise of programming toolkits and techniques to overcome the limitations of the Linux kernel when it comes to do high-performance packet processing. One of the most popular techniques is kernel bypass which means to skip the kernel’s networking layer and do all packet processing from user-space. Kernel bypass also involves to manage the NIC from user-space, in other words, to rely on an user-space driver to handle the NIC.
+
+By giving full control of the NIC to an user-space program, we reduce the overhead introduced by the kernel (context switching, networking layer processing, interruptions, etc), which is relevant enough when working at speeds of 10Gbps or higher. Kernel bypass plus a combination of other features (batch packet processing) and performance tuning adjustments (NUMA awareness, CPU isolation, etc) conform the basis of high-performance user-space networking. Perhaps the poster child of this new approach to packet processing is Intel’s DPDK (Data Plane Development Kit), although other well-know toolkits and techniques are Cisco’s VPP (Vector Packet Processing), Netmap and of course Snabb.
+
+The disadvantages of user-space networking are several:
+
+An OS’s kernel is an abstraction layer for hardware resources. Since user-space programs need to manage their resources directly, they also need to manage their hardware. That often means to program their own drivers.
+As the kernel-space is completely skipped, all the networking functionality provided by the kernel is skipped too. User-space programs need to reimplement functionality that might be already provided by the kernel or the OS.
+Programs work as sandboxes, which severely limit their ability to interact, and be integrated, with other parts of the OS.
+Essentially, user-space networking achieves high-speed performance by moving packet-processing out of the kernel’s realm into user-space. XDP does in fact the opposite: it moves user-space networking programs (filters, mappers, routing, etc) into the kernel’s realm. XDP allow us to execute our network function as soon as a packet hits the NIC, and before it starts moving upwards into the kernel’s networking subsystem, which results into a significant increase of packet-processing speed. But how does the kernel make possible for an user to execute their programs within the kernel’s realm? Before answering this question we need to take a look at BPF.
+
+BPF and eBPF
+
+Despite its somehow misleading name, BPF (Berkeley Packet Filtering) is in fact a virtual machine model. This VM was originally designed for packet filtering processing, thus its name.
+
+One of the most prominent users of BPF is the tool tcpdump. When capturing packets with tcpdump, an user can define a packet-filtering expression. Only packets that match that expression will actually be captured. For instance, the expression “tcp dst port 80” captures all TCP packets which destination port equals to 80. This expression can be reduced by a compiler to BPF bytecode.
+
+$ sudo tcpdump -d "tcp dst port 80"
+(000) ldh      [12]
+(001) jeq      #0x86dd          jt 2    jf 6
+(002) ldb      [20]
+(003) jeq      #0x6             jt 4    jf 15
+(004) ldh      [56]
+(005) jeq      #0x50            jt 14   jf 15
+(006) jeq      #0x800           jt 7    jf 15
+(007) ldb      [23]
+(008) jeq      #0x6             jt 9    jf 15
+(009) ldh      [20]
+(010) jset     #0x1fff          jt 15   jf 11
+(011) ldxb     4*([14]&0xf)
+(012) ldh      [x + 16]
+(013) jeq      #0x50            jt 14   jf 15
+(014) ret      #262144
+(015) ret      #0
+Basically what the program above does is:
+
+Instruction (000): loads the packet’s offset 12, as a 16-bit word, into the accumulator. Offset 12 represents a packet’s ethertype.
+Instruction (001): compares the value of the accumulator to 0x86dd, which is the ethertype value for IPv6. If the result is true, the program counter jumps to instruction (002), if not it jumps to (006).
+Instruction (006): compares the value to 0x800 (ethertype value of IPv4). If true jump to (007), if not (015).
+And so forth, until the packet-filtering program returns a result. This result is generally a boolean. Returning a non-zero value (instruction (014)) means the packet matched, whereas returning a zero value (instruction (015)) means the packet didn’t match.
+
+The BPF VM and its bytecode was introduced by Steve McCanne and Van Jacobson in late 1992, in their paper The BSD Packet Filter: A New Architecture for User-level Packet Capture, and it was presented for the first time at Usenix Conference Winter ‘93.
+
+Since BPF is a VM, it defines an environment where programs are executed. Besides a bytecode, it also defines a packet-based memory model (load instructions are implicitly done on the processing packet), registers (A and X; Accumulator and Index register), a scratch memory store and an implicit Program Counter. Interestingly, BPF’s bytecode was modeled after the Motorola 6502 ISA. As Steve McCanne recalls in his Sharkfest ‘11 keynote, he was familiar with 6502 assembly from his junior high-school days programming on an Apple II and that influence him when he designed the BPF bytecode.
+
+The Linux kernel features BPF support since v2.5, mainly added by Jay Schullist. There were not major changes in the BPF code until 2011, when Eric Dumazet turned the BPF interpreter into a JIT (Source: A JIT for packet filters). Instead of interpreting BPF bytecode, now the kernel was able to translate BPF programs directly to a target architecture: x86, ARM, MIPS, etc.
+
+Later on, in 2014, Alexei Starovoitov introduced a new BPF JIT. This new JIT was actually a new architecture based on BPF, known as eBPF. Both VMs co-existed for some time I think, but nowadays packet-filtering is implemented on top of eBPF. In fact, a lot of documentation refers now to eBPF as BPF, and the classic BPF is known as cBPF.
+
+eBPF extends the classic BPF virtual machine in several ways:
+
+Takes advantage of modern 64-bit architectures. eBPF uses 64-bit registers and increases the number of available registers from 2 (Accumulator and X register) to 10. eBPF also extends the number of opcodes (BPF_MOV, BPF_JNE, BPF_CALL…).
+Decoupled from the networking subsystem. BPF was bounded to a packet-based data model. Since it was used for packet filtering, its code lived within the networking subsystem. However, the eBPF VM is no longer bounded to a data model and it can be used for any purpose. It’s possible to attach now an eBPF program to a tracepoint or to a kprobe. This opens up the door of eBPF to instrumentation, performance analysis and many more uses within other kernel subsystems. The eBPF code lives now at its own path: kernel/bpf.
+Global data stores called Maps. Maps are key-value stores that allow the interchange of data between user-space and kernel-space. eBPF provides several types of Maps.
+Helper functions. Such as packet rewrite, checksum calculation or packet cloning. Unlike user-space programming, these functions get executed inside the kernel. In addition, it’s possible to execute system calls from eBPF programs.
+Tail-calls. eBPF programs are limited to 4096 bytes. The tail-call feature allows a eBPF program to pass control a new eBPF program, overcoming this limitation (up to 32 programs can be chained).
+eBPF: an example
+
+The Linux kernel sources include several eBPF examples. They’re available at samples/bpf/. To compile these examples simply type:
+
+$ sudo make samples/bpf/
+Instead of coding a new eBPF example, I’m going to reuse one of the samples available in samples/bpf/. I will go through some parts of the code and explain how it works. The example I chose was the tracex4 program.
+
+Generally, all the examples at samples/bpf/ consist of 2 files. In this case:
+
+tracex4_kern.c, contains the source code to be executed in the kernel as eBPF bytecode.
+tracex4_user.c, contains the user-space program.
+We need to compile then tracex4_kern.c to eBPF bytecode. At this moment, gcc lacks a backend for eBPF. Luckily, clang can emit eBPF bytecode. The Makefile uses clang to compile tracex4_kern.c into an object file.
+
+I commented earlier that one of the most interesting features of eBPF are Maps. Maps are key/value stores that allow to exchange data between user-space and kernel-space programs. tracex4_kern defines one map:
+
+struct pair {
+    u64 val;
+    u64 ip;
+};  
+
+struct bpf_map_def SEC("maps") my_map = {
+    .type = BPF_MAP_TYPE_HASH,
+    .key_size = sizeof(long),
+    .value_size = sizeof(struct pair),
+    .max_entries = 1000000,
+};
+BPF_MAP_TYPE_HASH is one of the many Map types offered by eBPF. In this case, it’s simply a hash. You may also have noticed the SEC("maps") declaration. SEC is a macro used to create a new section in the binary. Actually the tracex4_kern example defines two more sections:
+
+SEC("kprobe/kmem_cache_free")
+int bpf_prog1(struct pt_regs *ctx)
+{   
+    long ptr = PT_REGS_PARM2(ctx);
+
+    bpf_map_delete_elem(&my_map, &ptr); 
+    return 0;
+}
+    
+SEC("kretprobe/kmem_cache_alloc_node") 
+int bpf_prog2(struct pt_regs *ctx)
+{
+    long ptr = PT_REGS_RC(ctx);
+    long ip = 0;
+
+    // get ip address of kmem_cache_alloc_node() caller
+    BPF_KRETPROBE_READ_RET_IP(ip, ctx);
+
+    struct pair v = {
+        .val = bpf_ktime_get_ns(),
+        .ip = ip,
+    };
+    
+    bpf_map_update_elem(&my_map, &ptr, &v, BPF_ANY);
+    return 0;
+}   
+These two functions will allow us to delete an entry from a map (kprobe/kmem_cache_free) and to add a new entry to a map (kretprobe/kmem_cache_alloc_node). All the function calls in capital letters are actually macros defined at bpf_helpers.h.
+
+If I dump the sections of the object file, I should be able to see these new sections defined:
+
+$ objdump -h tracex4_kern.o
+
+tracex4_kern.o:     file format elf64-little
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text         00000000  0000000000000000  0000000000000000  00000040  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 kprobe/kmem_cache_free 00000048  0000000000000000  0000000000000000  00000040  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 kretprobe/kmem_cache_alloc_node 000000c0  0000000000000000  0000000000000000  00000088  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  3 maps          0000001c  0000000000000000  0000000000000000  00000148  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 license       00000004  0000000000000000  0000000000000000  00000164  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 version       00000004  0000000000000000  0000000000000000  00000168  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .eh_frame     00000050  0000000000000000  0000000000000000  00000170  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+Then there is tracex4_user.c, the main program. Basically what the program does is to listen to kmem_cache_alloc_node events. When that event happens, the corresponding eBPF code is executed. The code stores the IP attribute of an object into a map, which is printed in loop in the main program. Example:
+
+$ sudo ./tracex4
+obj 0xffff8d6430f60a00 is  2sec old was allocated at ip ffffffff9891ad90
+obj 0xffff8d6062ca5e00 is 23sec old was allocated at ip ffffffff98090e8f
+obj 0xffff8d5f80161780 is  6sec old was allocated at ip ffffffff98090e8f
+How the user-space program and the eBPF program are connected? On initialization, tracex4_user.c loads the tracex4_kern.o object file using the load_bpf_file function.
+
+int main(int ac, char **argv)
+{
+    struct rlimit r = {RLIM_INFINITY, RLIM_INFINITY};
+    char filename[256];
+    int i;
+
+    snprintf(filename, sizeof(filename), "%s_kern.o", argv[0]);
+
+    if (setrlimit(RLIMIT_MEMLOCK, &r)) {
+        perror("setrlimit(RLIMIT_MEMLOCK, RLIM_INFINITY)");
+        return 1;
+    }
+
+    if (load_bpf_file(filename)) {
+        printf("%s", bpf_log_buf);
+        return 1;
+    }
+
+    for (i = 0; ; i++) {
+        print_old_objects(map_fd[1]);
+        sleep(1);
+    }
+
+    return 0;
+}
+When load_bpf_file is executed, the probes defined in the eBPF file are added to /sys/kernel/debug/tracing/kprobe_events. We’re listening now to those events and our program can do something when they happen.
+
+$ sudo cat /sys/kernel/debug/tracing/kprobe_events
+p:kprobes/kmem_cache_free kmem_cache_free
+r:kprobes/kmem_cache_alloc_node kmem_cache_alloc_node
+All the other programs in sample/bpf/ follow a similar structure. There’s always two files:
+
+XXX_kern.c: the eBPF program.
+XXX_user.c: the main program.
+The eBPF program defines Maps and functions hooked to a binary section. When the kernel emits a certain type of event (a tracepoint, for instance) our hooks will be executed. Maps are used to exchange data between the kernel program and the user-space program.
+
+Wrapping up
+
+In this article I have covered BPF and eBPF from a high-level view. I’m aware there’s a lot of resources and information nowadays about eBPF, but I feel I needed to explain it with my own words. Please check out the list of recommended readings for further information.
+
+On the next article I will cover XDP and its relation with eBPF.
+
+Recommended readings:
+
+BPF: the universal in-kernel virtual machine by Jonathan Corbet. An introduction to BPF and its evolution towards eBPF.
+A thorough introduction to eBPF by Brendan Gregg. Article by LWN.net. Brendan tweets often about eBPF and maintains a list of resources in his personal blog.
+Notes on BPF & eBPF by Julia Evans. Notes on Suchakra Sharma’s presentation “The BSD Packet Filter: A New Architecture for User-level Packet Capture”. The notes are of good quality and really helpful to digest the slides.
+eBPF, part1: Past, Present and Future by Ferris Ellis. A long read, with a follow-up, but time worth invested. One of the best articles I’ve read so far about eBPF.
+
+
+=======================================================================
+How to build a kernel with XDP support
+XDP is a new Linux kernel component for fast packet processing. In this post I explain how to build a kernel with XDP support
+Posted by Diego Pino García on January 2, 2019
+Update (2019/01/10): This post explains how to build a kernel with AF_XDP support (rather than XDP support). XDP support in the kernel is made available through CONFIG_BPF_SYSCALL. XDP is shipped in the kernel since v4.8, and it’s usually enabled by default. AF_XDP is a new socket address family that relies on XDP to pass a packet from kernel-space directly to user-space using zero-copy. Thanks to Quentin Monet for the correction.
+
+This post is the first one of a series about XDP (eXpress Data Path), the brand-new kernel component for doing fast packet processing.
+
+Lately I’ve been in the quest of adding XDP support in Snabb. This work was actually started by one of our Coding Experience students, Konrad Djimeli. Unfortunately Konrad had to leave before completing his Coding Experience, so I picked up his work and finished it. The posts ahead are an attempt to summarize my findings about XDP. In this one, I explain how to get a kernel ready for starting with XDP.
+
+Building a kernel with XDP support is simply a matter of enabling that feature in the kernel’s .config file (CONFIG_XDP_SOCKETS=y). If you’re familiar with building kernels and installing them, you’re done. Besides enabling this option, there’s nothing else you need to do.
+
+However, if you’re not familiar with the process of building a kernel, a recap might be handy. In my case, it was ages since the last time I built a kernel. Here some instructions:
+
+First things first, fetch the Linux kernel source code:
+
+$ git clone https://github.com/torvalds/linux.git 
+You can chose whether to build master or any of the latest kernel releases. In my case, I went with v4.19:
+
+$ git checkout v4.19 -b v4.19
+Now you should run make menuconfig and pick the features you’d like to build in your kernel. Once you’re done, a configuration file with the selected options will be written in .config. However, there’s an easier way if what you really need is a .config file to start with. Simply copy the configuration file of some other kernel in your system (each kernel in /boot has its corresponding .config file).
+
+$ uname -r
+4.15.0-43-generic
+$ cp /boot/config-4.15.0-43-generic ./.config
+Edit .config and add XDP support:
+
+CONFIG_XDP_SOCKETS=y
+And we start building now:
+
+$ sudo make -j4 && sudo make modules_install INSTALL_MOD_STRIP=1
+That’s very standard, except for INSTALL_MOD_STRIP. What’s that for? Once the kernel is built, in some cases the initrd image is so big it doesn’t fit in /boot. If you have trouble with that, simply remove the table symbols of the binary to make it smaller. That’s what INSTALL_MOD_STRIP does. The size of initrd will be considerably reduced, likely fitting in /boot.
+
+Lastly, run make install to actually install your kernel. That command also updates Grub, so no need to run it manually.
+
+$ sudo make install
+Optionally, run make headers_install if you plan to use the kernel’s header files from an user-space program.
+
+Regarding the brand new kernel, it’s recommended to not make it your default kernel until you’ve verified it works. Once you’ve checked that, make it the default by following these steps:
+
+List Grub’s menu entries by running the following command: grep -i "menuentry_id_option" /boot/grub/grub.cfg. The literal after menuentry_id_option is the kernel’s identifier. For instance, gnulinux-4.19.0-advanced-886d53cd-5893-4e51-ac10-2282e653e0b9.
+Edit /etc/default/grub and set GRUB_DEFAULT to the kernel’s identifier. In my case, GRUB_DEFAULT=gnulinux-4.19.0-advanced-886d53cd-5893-4e51-ac10-2282e653e0b9.
+Run sudo update-grub, to apply the changes.
+We are ready now to use XDP to process packets. But how to do that will be the subject of a new post.
+
+
+==============================================================
+
+Sandboxing with namespace and chroot
+
+Many approaches to sandboxing in Linux
+By Shubham Dubey - July 5, 2016029017
+Share on Facebook Tweet on Twitter  
+Advertisement
+
+SandBox
+
+You can isolate malicious programs or risky tasks by sandboxing them in different ways to stop them from affecting your main system. This article gives the reader a working knowledge of sandboxing in Linux.
+
+Securing your system is a big priority for every production environment, whether you are a systems admin or a software developer. The best way to secure your operating system from doubtful programs or processes is by sandboxing (also termed as jailing). Sandboxing involves providing a safe environment for a program or software so that you can play around with it without hurting your system. It actually keeps your program isolated from the rest of the system, by using any one of the different methods available in the Linux kernel. Sandboxing can be useful to systems administrators if they want to test their tasks without any damage and also to developers for testing their pieces of code. A sandbox can help you to create a different environment from your base operating system. It has become trendy due to its extensive use by PaaS and SaaS providers.
+The idea of jailing is not new since it has been available in UNIX based BSD OSs. For years, BSD has used the concept of jails, while Solaris has used zones. But in Linux, this concept was started with chroot and has been possible because namespaces are present in the Linux kernel.
+
+Namespaces
+Namespaces are features available in Linux to isolate processes in different system resource aspects. There are six types of namespaces available up to kernel 4.0. And more will be added in the future. These are:
+
+mnt (mount points, file systems)
+pid (processes)
+net (network stack)
+ipc (system V IPC)
+uts (host name)
+user (UIDs)
+Advertisement
+
+Linux namespaces are not new. The first one was added to Linux in 2008 (Linux kernel 2.6), but they became more widely used only in Linux kernel 3.6, when work on the most complex of them all  the users namespace  was completed. Linux kernel uses clone(), unshare() and setns() system calls to create and control namespaces.
+Creation of new namespaces is done by the clone() system call, which is also used to start a process. The setns() system call adds a running process to the existing namespace. The unshare() call works on a process inside the namespace, and makes the caller a member of the namespace. Its main purpose is to isolate the namespace without having to create a new process or thread (as is done by clone()).You can directly use some services to get the features of these namespaces. CLONE_NEW* identifiers are used with these system calls to identify the type of namespace. These three system calls make use of the CLONE_NEW* as CLONE_NEWIPC, CLONE_NEWNS, CLONE_NEWNET, CLONE_NEWPID, CLONE_NEWUSER, and CLONE_NEWUTS. A process in a namespace can be different because of its unique inode number when it is created.
+
+#ls -al /proc/<pid>/ns
+lrwxrwxrwx 1 root root 0 Feb 7 13:52 ipc -> ipc:[4026532253]
+lrwxrwxrwx 1 root root 0 Feb 7 15:39 mnt -> mnt:[4026532251]
+lrwxrwxrwx 1 root root 0 Feb 7 13:52 net -> net:[4026531957]
+lrwxrwxrwx 1 root root 0 Feb 7 13:52 pid -> pid:[4026532254]
+lrwxrwxrwx 1 root root 0 Feb 7 13:52 user -> user:[4026531837]
+lrwxrwxrwx 1 root root 0 Feb 7 15:39 uts -> uts:[4026532252]
+Mount namespace: A process views different mount points other than the original system mount point. It creates a separate file system tree associated with different processes, which restricts them from making changes to the root file system.
+
+PID namespace: PID namespace isolates a process ID from the main PID hierarchy. A process inside a PID namespace can have the same PID as a process outside it, and even inside the namespace, you can have different init with PID 1.
+UTS namespace: In the UTS (UNIX Timesharing System) namespace, a process can have a different set of domain names and host names than the main system. It uses sethostname() and setdomainname() to do that.
+IPC namespace: This is used for inter-process communication resources isolation and POSIX message queues.
+User namespace: This isolates user and group IDs inside a namespace, which is allowed to have the same UID or GID in the namespace as in the host machine. In your system, unprivileged processes can create user namespaces in which they have full privileges.
+Network namespace: Inside this namespace, processes can have different network stacks, i.e., different network devices, IP addresses, routing tables, etc.
+Sandboxing tools available in Linux use this namespaces feature to isolate a process or create a new virtual environment. A much more secure tool will be that which uses maximum namespaces for isolation. Now, lets talk about different methods of sandboxing, from soft to hard isolation.
+
+chroot
+chroot is the oldest sandboxing tool available in Linux. Its work is the same as mount namespace, but it is implemented much earlier. chroot changes the root directory for a process to any chroot directory (like /chroot). As the root directory is the top of the file system hierarchy, applications are unable to access directories higher up than the root directory, and so are isolated from the rest of the system. This prevents applications inside the chroot from interfering with files elsewhere on your computer. To create an isolated environment in old SystemV based operating systems, you first need to copy all required packages and libraries to that directory. For demonstration purposes, I am running ls on the chroot directory.
+First, create a directory to set as root a file system for a process:
+
+<em>#mkdir /chroot</em>
+Next, make the required directory inside it.
+
+<em>#mkdir /chroot/{lib,lib64,bin,etc}</em>
+Now, the most important step is to copy the executable and libraries. To get the shell inside the chroot, you also need /bin/bash.
+
+#cp -v /bin/{bash,ls} /chroot/bin
+To see the libraries required for this script, run the following command:
+
+#ldd /bin/bash
+linux-vdso.so.1 (0x00007fff70deb000)
+libncurses.so.5 => /lib/x86_64-linux-gnu/libncurses.so.5 (0x00007f25e33a9000)
+libtinfo.so.5 => /lib/x86_64-linux-gnu/libtinfo.so.5 (0x00007f25e317f000)
+libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f25e2f7a000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f25e2bd6000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f25e360d000)
+ 
+#ldd /bin/ls
+linux-vdso.so.1 (0x00007fff4f8e6000)
+libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f9f00aec000)
+libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f9f00748000)
+libpcre.so.3 => /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f9f004d7000)
+libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f9f002d3000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f9f00d4f000)
+libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f9f000b6000)
+Now, copy these files to the lib or lib64 of /chroot
+as required.
+Once you have copied all the necessary files, its time to enter the chroot.
+
+#sudo chroot /chroot/ /bin/bash
+You will be prompted with a shell running inside your virtual environment. Here, you dont have much to run besides ls, but it has changed the root file system for this process to /chroot.
+To get a more full-featured environment you can use the debootstrap utility to bootstrap a basic Debian system:
+
+#debootstrap --arch=amd64 unstable my_deb/
+It will download a minimal system to run under chroot. You can use this to even test 32-bit applications on 64-bit systems or for testing your program before installation. To get process management, mount proc to the chroot, and to make the contents of home lost on exit, mount tmpfs at /home//:
+
+#sudo mount -o bind /proc my_deb/proc
+#mount -t tmpfs -o size=100m tmpfs /home/user
+To get Internet connection inside, use the following command:
+
+#sudo cp /etc/resolv.conf /var/chroot/etc/resolv.conf
+After that, you are ready to enter your environment.
+
+#chroot my_deb/ /bin/bash
+Here, you get a whole basic operating system inside your chroot. But it differs from your main system by mount point, because it only uses the mount property as the isolator. It has the same hostname, IP address and process running as in the main system. Thats why it is much less secure (this is even mentioned in the man page of chroot), and any running process can still harm your computer by killing your tasks or affecting network based services.
+
+Note: To run graphical applications inside chroot, open x server by running the following command on the main system:
+
+#xhost +
+and on chroot system
+#export DISPLAY=:0.0
+On systemd based systems, chrooting is pretty straightforward. Its needed to define the root directory on the processes unit file only.
+
+[Unit]
+Description=my_chroot_Service
+[Service]
+RootDirectory=/chroot/foobar
+ExecStartPre=/usr/local/bin/pre.sh
+ExecStart=/bin/my_program
+RootDirectoryStartOnly=yes
+Here RootDirectory shows where the root directory is for the foobar process.
+
+Note: The program script path has to be inside chroot, which makes the full path of that process script as /chroot/bin/my_program.
+
+Before the daemon is started, a shell script pre.sh is invoked, the purpose of which is to set up the chroot environment as necessary, i.e., mount /proc and similar file systems into it, depending on what the service might need. You can start your service by using the following command:
+
+#systemctl start my_chroot_Service.service
+Ip-netns
+The Ip-netns utility is one of the few that directly use network namespaces to create virtual interfaces. To create a new network namespace, use the following command:
+
+#ip netns add netns1
+To check the interfaces inside, use the command shown below:
+
+#ip netns exec netns ip addr
+You can even get the shell inside it, as follows:
+
+#ip netns exec netns /bin/bash
+This will take you inside the network namespace, which has only a single network interface with no IP. So, you are not connected with the external network and also cant ping.
+
+#ip netns exec netns ip link set dev lo up
+This will bring the loop interface up. But to connect to the external network you need to create a virtual Ethernet and add it to netns as follows:
+
+# ip link add veth0 type veth peer name veth1
+# ip link set veth1 netns netns1
+Now, its time to set the IP to these devices, as follows:
+
+# ip netns exec netns1 ifconfig veth1 10.1.1.1/24 up
+# ifconfig veth0 10.1.1.2/24 up
+Unshare
+The unshare utility is used to create any namespace isolated environment and run a program or shell inside it.
+To get a network namespace and run the shell inside it, use the command shown below:
+
+#unshare --net /bin/bash
+The shell you get back will come with a different network stack. You can check this by using #ip addr, as follows:
+
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+To create a user namespace environment, use the following command:
+
+#unshare --user /bin/bash
+You can check your user inside the shell by using the command below:
+
+#whoami
+nobody
+To get the PID namespace, use the following command:
+
+#unshare --pid --fork /bin/bash
+Inside this namespace, you can see all the processes but cannot kill any.
+
+#ps -aux |grep firefox
+root 1110 42.6 11.0 1209424 436756 tty1 Sl 23:36 0:15 .firefox1/./firefox
+root 1208 0.0 0.0 12660 1648 pts/2 S+ 23:37 0:00 grep firefox
+#kill 1110
+bash: kill: (1110) - No such process
+To get a whole different degree of process tree isolation you need to mount another proc for the namespace, as follows:
+
+unshare --pid --fork --mount-proc /bin/bash
+In this way, you can use unshare to create a single namespace. More about it can be found out on the man page of unshare.
+
+Note: A namespace created by using unshare can also be combined to create a single shell which uses different namespaces. For example:
+
+#unshare --pid --fork --user /bin/bash
+This will create an isolated environment using the PID and user namespaces.
+
+Firejail
+Firejail is an SUID sandbox program that is used to isolate programs for testing or security purposes. It is written in C and can be configured to use most of the namespaces. To start a service in firejail, use the following command:
+
+#firejail firefox
+It will start Firefox in a sandbox with the root file system mounted as read only. To start Firefox with only ~/Downloads and ~/.mozilla mounted to write, use the following command:
+
+#firejail --whitelist=~/.mozilla --whitelist=~/Download firefox
+Firejail, by default, uses the user namespace and mounts empty temporary file systems (tmpfs) on top of the user home directory in private mode. To start a program in private mode, use the command given below:
+
+#firejail --private firefox
+To start firejail in a new network stack, use the following command:
+
+#firejail --net=eth0 --whitelist=~/.mozilla --whitelist=~/Download firefox
+To assign an IP address to the sandbox, use the following command:
+
+#firejail --net=eth0 --ip=192.168.1.155 firefox
+Note: To sandbox all programs running by a user, you can change the default shell of that user to /usr/bin/firejail.
+
+#chsh shell /usr/bin/firejail
+Containers
+When learning about virtualisation technologies, what attracted me most were containers because of their easy deployment. Containers (also known as lightweight virtualisation) are tools for isolation, which use namespaces for the purpose. They are a better sandboxing utility, because they generally use more then one namespace and are more focused on creating a whole virtual system instance rather than isolating a single process.
+Containers are not a new technology. They have been in UNIX and Linux for decades but due to their increasing use in SaaS and PaaS, they have become a hot topic since they provide the most secure environment to deliver and use these services. They are called lightweight virtualisation because they provide process level isolation, which means they depend on the Linux kernel. Hence, only those instances can be created which use the same base kernel. There are lots of containers available for Linux that have gained popularity over the past few years.
+
+Systemd-nspawn
+This is a utility available by default with systemd, which creates separate containers for isolation. It uses mount and PID namespaces by default but another namespace can also be configured. To create a container or isolated shell, you need to download a basic distribution which we have done already, using debootstrap. To get inside this container, use the code below:
+
+#systemd-nspawn -D my_deb
+This container is stronger then chroot because it not only has a different mount point but also a separate process tree (check it by ps -aux). But still, the hostname and IP interfaces are the same as the host system. To add your own network stack, you need to connect to the existing network bridge.
+
+#systemd-nspawn -D my_deb --network-bridge=br0
+This will start the container with the network namespace with a pair of veth devices. You can even boot the instance by the -b option, as follows:
+
+#systemd-nspawn -bD my_deb
+Note: While booting the container, you will be required to enter the password of the root user; so first run #passwd inside to set the root password.
+The whole nspawn project is relatively young; hence there is still a lot that needs to be developed.
+
+Docker
+Docker is the smartest and most prominent container in Linux to run an applications environment. Over the past few years, it has grabbed the most attention. Docker containers use most of the namespaces and cgroups present in systemd for providing a strong isolated environment. Docker runs on the Docker daemon, which starts an isolated instance like systemd-nspawn, in which any service can be deployed with just a few tweaks. It can be used as a sandboxing tool to run applications securely or to deploy some software service inside it.
+To get your first Docker container running, you need to first start the Docker daemon, and then download the base image from the Docker online repository, as follows:
+
+#service docker start
+#docker pull kalilinux/kali-linux-docker
+Note: You can also download other Docker images from the Docker Hub (https://hub.docker.com/).
+It will download the base Kali Linux image. You can see all the available images on your system by using the following code:
+
+#docker images
+REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE
+kalilinux/kali-linux-docker
+latest 63ae5ac8df0f 1 minute ago 325 MB
+centos centos6 b9aeeaeb5e17 9 months ago 202.6 MB
+hello-world latest 91c95931e552 9 months ago 910 B
+To run a program inside your container, use the command given below:
+
+#docker run -i -t kalilinux/kali-linux-docker ls
+bin dev home lib64 mnt proc run selinux sys usr
+boot etc lib media opt root sbin srv tmp var
+This will start (run) your container, execute the command and then close the container. To get an interactive shell inside the container, use the command given below:
+
+#docker run -t -i kalilinux/kali-linux-docker /bin/bash
+root@24a70cb3095a:/#
+This will get you inside the container where you can do your work, isolated from your host machine. 24a70cb3095a is your containers ID. You can check all the running containers by using the following command:
+
+#docker ps
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+24a70cb3095a kalilinux/kali-linux-docker /bin/bash About a minute ago Up About a minute angry_cori
+While installing the Docker image, Docker automatically creates a veth for Docker, which makes the Docker image connect to the main system. You can check this by using #ifconfig and pinging your main system. At any instance, you can save your Docker state as a new container by using the code given below:
+
+#docker commit 24a70cb3095a new_image
+#docker images
+REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE
+new_image latest a87c73abca9d 6 seconds ago 325 MB
+kalilinux/kali-linux-docker
+latest 63ae5ac8df0f 1 hours ago 325 MB
+centos centos6 b9aeeaeb5e17 9 months ago 202.6 MB
+hello-world latest 91c95931e552 9 months ago 910 B
+You can remove that image by using #docker rmi new_image. To stop a container, use docker stop and after that remove the files created on the host node by that container.
+
+#docker stop 24a70cb3095a
+#docker rm 24a70cb3095a
+For running applications on a Docker instance, you may require to attach it to the host system in some way. So, to mount the external storage to the Docker image, you can use the -v flag, as follows:
+
+#docker run -it -v /temp/:/home/ kalilinux/kali-linux-docker /bin/bash
+This will mount /temp/ from the main system to the /home/ of the host system. To attach the Docker port to an external system port, use  -p:
+
+#docker run -it -v /temp/:/home/ -p 4567:80 kalilinux/kali-linux-docker /bin/bash
+This will attach the external port 4567 to the containers port 80. This can be very useful for SaaS and PaaS, provided that the deployed application needs to connect to the external network. Running GUI applications on Docker can often be another requirement. Docker doesn’t have x server defined so, to do that, you need to mount the x server file to the Docker instance.
+
+#docker run -it -v -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \ kalilinux/kali-linux-docker /bin/bash
+This will forward the X11 socket to the container inside Docker. To ship the Docker image to another system, you need to push it on the Docker online repository, as follows:
+
+#docker push new_image
+You can even save the container image in the tar archive:
+
+#docker export new_image
+There is a lot more to learn on Docker, but going deeper into the subject is not the purpose of this article. The positive point about Docker is its many tutorials and hacks available online, from which you can easily get a better understanding of how to use it to get your work done. Since its first release in 2013, Docker has improved so much that it can be deployed in a production or testing environment because it is easy to use.
+There are other solutions made for Docker, which are designed for all scenarios. These include Kubernetes (a Google project for the orchestration of Docker), Swarm and many more services for Docker migrations, which provide graphical dashboards, etc. Automation tools for systems admins like Puppet and Chef are also starting to provide support to Docker containers. Even systemd has started to provide a management utility for nspawn and other containers with a number of tools like machinectl and journalctl.
+
+machinectl
+This comes pre-installed with the systemd init manager. It is used to manage and control the state of the systemd based virtual machine, and the container works underneath the systemd service. To see all containers running in your system, use the command given below:
+
+#machinectl -a
+To get a status of any running container, use the command given below:
+
+#machinectl status my_deb
+Note: machinectl doesnt show Docker containers, since the latter run behind the Docker daemon.
+
+To log in to a container, use the command given below:
+
+#machinectl login my_deb
+Switch off a container, as follows:
+
+#machinectl poweroff my_deb
+To kill a container forcefully, use the following command:
+
+#machinectl -s kill my_deb
+To view the logs of a container, you can use journalctl, as follows:
+
+#journalctl -M my_deb
+What to get from this article
+Sandboxes are important for every IT professional, but different professionals may require different solutions. If you are a developer or application tester, chroot may not be a good solution as it allows attackers to escape from the chroot jail. Weak containers like systemd-nspawn or firejail can be a good solution because they are easy to deploy. Using Docker-like containers for application testing can be a minor headache, as making your container ready for your process to run smoothly can be a little painful.
+If you are a SaaS or PaaS provider, containers will always be the best solution for you because of their strong isolation, easy shipping, live migration and clustering-like features. You may go with traditional virtualisation solutions (virtual machines), but resource management and quick booting can only be got with containers.
+
+
+
+

@@ -1,0 +1,41 @@
+Slide1 
+Pink because I don't recall seeing a presentation in pink background yet, though pink is *not* my favorite color.
+
+Slide2
+40% of worldwide mobile traffic goes through Ericsson SW
+Erlang, used by rabbitmq is EricssonLanguage open sourced by Ericsson
+Bluetooth invented by /// 
+maybe add others
+
+Slide3
+pic1 -Last time on customer site May 2017,  in London ... actually Slough, which is *not* London.
+pic2 - with my kid on site, a whole Sunday,  installing Openstack for MWC
+Waiting for a better pic from Martin
+
+Slide4
+DPDK/SDPK Data and Storage acceleration
+
+Slide5 
+Openstack with SmartNICs
+Cascade Glacier
+
+Slide6
+PCI bifurcation to accommodate 2 NUMA nodes, no need for traffic to cross the qpi link
+ex Mellanox(Nvidia?), Intel
+
+Slide7 
+On the NIC:
+dual-core ARM, RISC proc similar to what you have in your mobile phone
+centos or wind river linux with busybox 
+flash disks
+2x25 / 2x50/ 2x100 GbE connectors
+ovs control plane running inside the nic
+
+Talk about the booting sequence
+
+NIC as virtio block device in host OS
+
+kernel bypass with a hook in eXpress Data Path, to skip the kernel's networking layer
+eBFP (Berkeley Packet Filtering) to do sort of what iptables does 
+
+Short demo with logging in the nic, showing some ovs flows. 
