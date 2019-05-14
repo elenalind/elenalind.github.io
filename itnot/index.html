@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/white.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -69,7 +69,7 @@ or this ... - advance to next slide -
 					</tr>
 					<tr>
 					<p>
-					    <th>40% of all mobile traffic</th>	
+					    <th>40% of all mobile traffic crunching data</th>	
 					</p>
 				        </tr>
 					<aside class="notes">
@@ -88,7 +88,7 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 Our customers are typically telecom operators ... well, and a taxi company ... in Dubai ... and Panasonic Avionics for entertainment on board of flights, and many other such examples. 
 What is NFVi? 
 For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
-NFV means, more or less, decoupling the SW from HW. It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
+NFVi is part of the NFV framework and it means, more or less, decoupling the SW from HW for network nodes using virtualization. It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
 Traces of this decoupling of the network functions from proprietary hardware appliances are there for many years now. 
 Around the year 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
 
@@ -170,6 +170,12 @@ When should you use a smartNIC?
 <!––  Slide10 ––>
                                 <section> Openstack working with SmartNICs
                                         <aside class="notes">
+Now the question is where are we in Openstack when it comes to integrating the new coming smartNICs?
+Work is done in several Openstack components, like ironic and neutron of course.											
+Some smartNIC vendors use native virtio driver while other use proprietary 
+		
+https://specs.openstack.org/openstack/nova-specs/specs/pike/implemented/netronome-smartnic-enablement.html
+									
 Openstack working with SmartNICs - TO BE ADDED
 Openstack support for smartNICs starting with Rocky, Stein - TO BE ADDED
 Neutron integration with SmartNICs - TO BE ADDED
