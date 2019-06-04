@@ -239,7 +239,14 @@ The smartNICs can do packet processing inside the NIC so in order to support thi
 Openstack Cybborg
 
 										
-Some smartNIC vendors use native virtio driver while other use proprietary 
+Some smartNIC vendors might use native virtio driver while others use proprietary drivers.
+
+A slide with the dropping traffic from having the same mac 
+traffic reaches NIC in dut5 but is dropped, same mac?
+root@FPA1066GX-DA2:~# ovs-appctl  dpif/dump-flows br0
+in_port(14),eth(src=68:05:ca:91:36:b5,dst=68:05:ca:91:36:b5),eth_type(0x0800),ipv4(src=192.168.0.1,dst=192.168.1.1,proto=6),tcp(src=1234,dst=5678), packets:0, bytes:0, used:7.340s, actions:drop
+
+
 		
 https://specs.openstack.org/openstack/nova-specs/specs/pike/implemented/netronome-smartnic-enablement.html
 									
@@ -265,7 +272,12 @@ We basically need to overcome the limitations in the Linux kernel which is not i
 Why is the Linux kernel a problem when we talk about latency and performance ( with performance, I mean higher throughput at a lower CPU cost)? 
 Well, the Linux kernel is monolithic, it's millions of lines of code.
 It contains lots of drivers which makes the Linux kernel work with any hw, not just your specific hw/smartNIC. 
-It allows running many applications at the same time by using a time sharing layer. Resources like CPU, mem exposed by the kernel can be shared between all the processes running. 
+It allows running many applications at the same time by using a time sharing layer. Resources like CPU, mem exposed by the kernel can be shared between all the processes running.
+
+
+How your operating system deals with data
+Data destined to a particular system is first received by the NIC and is stored in the ring buffer of the reception (RX) present in the NIC, which also has TX (for data transmission). Once the packet is accessible to the kernel, the device driver raises softirq (software interrupt), which makes the DMA (data memory access) of the system send that packet to the Linux kernel. The packet data in the Linux kernel gets stored in the sk_buff data structure to hold the packet up to MTU (maximum transfer unit). When all the packets are filled in the kernel buffer, they get sent to the upper processing layer – IP, TCP or UDP. The data then gets copied to the preferred data receiving process.
+Note: Initially, a hard interrupt is raised by the device driver to send data to the kernel, but since this is an expensive task, it is replaced by a software interrupt. This is handled by the NAPI (new API), which makes the processing of incoming packets more efficient by putting the device driver in polling mode.
 
 The networking stack inside the Linux kernel limits how many packets per second it can process.
 Too many packets per second means CPUs get busy just receiving packets, then either the packets are dropped or we CPU starve the applications.
@@ -312,22 +324,59 @@ cd $RTE_SDK/$RTE_TARGET/app
 XDP
 Another way to achieve high performance would be partially bypassing the Linux kernel, for example using XDP. 
 
-XDP DP (eXpress Data Path) is an eBPF based high performance data path merged in the Linux kernel.
+XDP  (eXpress Data Path) is a component in the kernel that can be used for fast packet processing. It is an eBPF (I'll get back to explaining what eBPF is) based high performance data path merged in the Linux kernel.
 
 XDP (eXpress Data Path) is shipped with the kernel since version 4.8 and it is enabled by default, with CONFIG_BPF_SYSCALL.
 
-What the heck is eBPF ?
-eBPF stands for "enhanced Berkeley Packet Filter" it's a linux kernel technology 
- which is an in-kernel virtual machine that was originally used for to run mini-filter programs efficiently, 
 
-To check if XDP it is enabled in the kernel, it's simply grepping for it in the kernel config file 
+To check if XDP it is enabled in the kernel, it's as simply as grepping for it in the kernel config file 
 
 ┌─(ecrehar@elxahkpv4m2:pts/5)────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(~/Downloads)─┐
 └─(15:09:%)── grep CONFIG_BPF_SYSCALL /boot/config-4.15.0-46-generic                                                                                                                                                 ──(mån,06.03)─┘
 CONFIG_BPF_SYSCALL=y
 
+The Linux kernel configuration item CONFIG_XDP_SOCKETS:
 
-XDP is a hook in the Linux kernel. 
+prompt: XDP sockets
+type: bool
+depends on: CONFIG_BPF_SYSCALL
+defined in net/xdp/Kconfig
+found in Linux kernels: 4.18–4.20, 5.0–5.1, 5.2-rc+HEAD
+
+
+
+PICTURE OF XDP 
+
+So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack
+XDP operates directly on the packet buffer. (packets are deleted into sockets , decision taken 20 years ago, and this is not the fastest way)
+
+DPDK steals the whole NIC, we dont do that with XDP , not taking the whole NIC.
+
+a filter on receive but zero copy to user space 
+
+
+XDP can be used in two ways:
+first mode 
+Native mode XDP , a driver hook , before memory allocation , small no of instructions executed before we start processing packets
+limited number of drivers that support XDP 
+
+second mode 
+generic mode
+works on any net device , driver independent , but larger number of instructions executed which mean lower performance than native mode, when it comes to packet processing
+
+dataplane which is inside the kernel 
+control plane in user space which is done from eBPF, userspace load eBPF program , everything goes through the BPF-syscall
+
+the Native way is the way to go 
+XDP driver hook 
+
+What the heck is eBPF ?
+eBPF stands for "enhanced Berkeley Packet Filter" it's a linux kernel technology that is used by e.g. tcpdump and other analysis tools.
+eBPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or exploring running software.
+eBPF is basically like a superpower.
+BPF was initially used for tools like tcpdump but  Alexei Starovoitov introduced eBPF to be used  for things like to NATing, routing, doing what iptables does for example.
+
+
 
 
 Jumping between kernel space and user space cost on performance - TO BE ADDED

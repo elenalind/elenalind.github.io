@@ -254,6 +254,12 @@ https://blog.cloudflare.com/why-we-use-the-linux-kernels-tcp-stack/
 https://blogs.igalia.com/dpino/2019/01/07/a-brief-introduction-to-xdp-and-ebpf/
 https://blogs.igalia.com/dpino/2019/01/02/build-a-kernel/
 https://www.oreilly.com/ideas/ebpf-and-systems-performance
-
-
-
+https://conferences.oreilly.com/velocity/vl-ca-2017/public/schedule/detail/59282
+https://cdn.oreillystatic.com/en/assets/1/event/244/Performance%20analysis%20superpowers%20with%20Linux%20eBPF%20Presentation.pdf
+https://www.youtube.com/watch?v=bj3qdEDbCD4 Brendan
+http://www.brendangregg.com/blog/2016-03-05/linux-bpf-superpowers.html
+https://www.youtube.com/watch?v=Efw1wWT6OMA Alexei
+https://cilium.io/blog/2018/11/20/fb-bpf-firewall/
+https://www.youtube.com/watch?v=Y103CWBa1BI XDP talk
+https://blogs.msdn.microsoft.com/peterwie/2006/03/09/what-is-dma-part-4-common-buffer/
+https://opensourceforu.com/2016/10/network-performance-monitoring/
