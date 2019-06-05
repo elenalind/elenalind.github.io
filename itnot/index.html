@@ -26,7 +26,8 @@
 			<div class="slides">
 				
 <!––  Slide0 ––>				
-				<section>In the NIC of time: Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs
+				<section><p><b>In the NIC of time</b></p>
+				<p>Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs<p/>
                                     <aside class="notes">
                                         Thank you, Daniel, for the (nice? warm?) introduction.
                                     </aside>
@@ -35,8 +36,8 @@
 				<section>
 			        <img src="pics/slide1.png" width=70% height=70%></th>
 				    <aside class="notes">
-So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.
-I work at Ericsson as a systems manager. That's *systems* manager, so ... -advance to next slide-
+<p>So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.</p>p>
+<p>I work at Ericsson as a systems manager. That's *systems* manager, so ... </p>p>
 				    </aside>
 				</section>
 <!––  Slide2 ––>				
@@ -85,8 +86,10 @@ Bluetooth comes from Ericsson too ...
 <!––  Slide6 ––>	
 				<section>
 					<tr>
+						<th><img src="pics/slide6_openstack-logo.png" width=34% height=34%></th> 
+					</tr>
+					<tr>
 					    <th><img src="pics/slide6_nfv.jpeg" width=50% height=50%></th>
-					    <th><img src="pics/slide6_openstack-logo.png" width=44% height=44%></th> 
 					</tr>
 
 					<aside class="notes">
@@ -126,16 +129,13 @@ To offload processing from CPU, a smartNIC will, for instance, run the ovs contr
 <!––  Slide8 ––>
                                 <section>
                                         <tr>
-                                            <th><img src="pics/slide8_intel.png" width=44% height=44%></th>
-                                            <th><img src="pics/slide8_mellanox.jpg" width=25% height=25%></th>
+                                            <th><img src="pics/slide8_intel.png" width=24% height=24%></th>
+                                            <th><img src="pics/slide8_mellanox.jpg" width=45% height=45%></th>
                                         </tr>
-                                        <tr>
                                         <tr>
                                             <th><img src="pics/slide8_Broadcom.jpg" width=44% height=44%></th>
-					</tr>
-					<tr>
-                                            <th><img src="pics/slide8_netronome.png" width=44% height=44%></th>
-                                        </tr>
+                                            <th><img src="pics/slide8_netronome.png" width=45% height=45%></th>
+                                        </tr>                                        
                                         <aside class="notes">
 There are quite a few types of smartNICs, ranging from thousands to a few hundred dollars(some you can buy on eBay).
 
@@ -153,9 +153,12 @@ You have options around the number of PCI lanes to be used, x8 or x16.  - advanc
 
 <!––  Slide9 ––>
                                 <section>
-                                        <tr>
-					 <p>Is it a bird? is it a plane? It's SmartNIC !</p>
-                                        </tr>
+									                                        <tr>
+
+					 <p>Is it a bird? is it a plane?</p>
+					 <p> It's SmartNIC !</p>
+					                                         </tr>
+
                                         <aside class="notes">
 Is it a bird? is it a plane? It's SmartNIC !
 
@@ -169,21 +172,57 @@ In this case you can look into using a bifurcated smartNIC, that's basically spl
 
 If you use two smartNICs, do you want two separate ovs controllers in your compute? will OpenStack even support that? 
 
+                                        </aside>
+                                </section>
+                                
+<!––  Slide9 ––>
+                                <section>
+                                        <tr>
+					 <p>What is this smartNIC, anyway?</p>
+					 <p>Is it an embedded linux, is it a linux mini server?</p>
+					 
+                                        </tr>
+                                        <aside class="notes">
+
 What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini server?
 Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux on them. Then you need something like IPMI, we're talking rather something like a linux server here than an embedded linux. 
 
 What security concerns are raised with introducing a smartNIC with linux running on it. I'm looking at you, Kim!
+
+                                        </aside>
+                                </section>
+
+<!––  Slide9 ––>
+                                <section>
+                                        <tr>
+					 <p>When should you use a smartNIC?</p>
+                                </section>   
+                                
+<!––  Slide9 ––>
+                                <section>
+                                        <tr>
+					 <p>When should you use a smartNIC?</p>
+					 <p>more than 4CPUs for OVS per compute host</p>
+					 
+                                        </tr>
+                                        <aside class="notes">
 
 When should you use a smartNIC?
 (Intel info) If on your host you use more than 4CPUs for OVS, then you should switch to using smartNICs, it makes sense from a business point of view. 
 (Also, smartNIC is a good idea if you need low latency and don't care so much about migration)
 - advance to next slide - 
                                         </aside>
-                                </section>
-
+                                </section>                                
 <!––  Slide10 ––>
-                                <section> Openstack working with SmartNICs
+                                <section>   <p>Ironic Neutron Cyborg</p>
+                                        <tr>
+                                            <th><img src="pics/OpenStack_Project_Ironic_mascot.png" width=25% height=25%></th>
+                                            <th><img src="pics/OpenStack_Project_Neutron_mascot.png" width=25% height=25%></th>
+                                            <th><img src="pics/OpenStack_Project_Cyborg.png" width=25% height=25%></th>
+                                        </tr>
+                                                                        
                                         <aside class="notes">
+											Openstack working with SmartNICs 
 Now the question is where are we in Openstack when it comes to integrating the wide range of smartNICs appearing on the market?
 Work is done in several Openstack projects, like ironic, nova and neutron of course.	
 
@@ -241,11 +280,6 @@ Openstack Cybborg
 										
 Some smartNIC vendors might use native virtio driver while others use proprietary drivers.
 
-A slide with the dropping traffic from having the same mac 
-traffic reaches NIC in dut5 but is dropped, same mac?
-root@FPA1066GX-DA2:~# ovs-appctl  dpif/dump-flows br0
-in_port(14),eth(src=68:05:ca:91:36:b5,dst=68:05:ca:91:36:b5),eth_type(0x0800),ipv4(src=192.168.0.1,dst=192.168.1.1,proto=6),tcp(src=1234,dst=5678), packets:0, bytes:0, used:7.340s, actions:drop
-
 
 		
 https://specs.openstack.org/openstack/nova-specs/specs/pike/implemented/netronome-smartnic-enablement.html
@@ -255,10 +289,70 @@ Openstack support for smartNICs starting with Rocky, Stein - TO BE ADDED
 Neutron integration with SmartNICs - TO BE ADDED
 Openstack Cyborg for integrating FPGAs with openstack - TO BE ADDED
 
-
 - advance to next slide - 
                                         </aside>
                                 </section>
+
+<!––  SlideX ––>
+                                <section>
+<font size="-2">										
+<p style="text-align:left;">root@cic-1:~# openstack  port create<br>                                        
+<p style="text-align:left;">usage: openstack port create [-h] [-f {json,shell,table,value,yaml}]<br>                                        
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[-c COLUMN] [--max-width <integer>] [--fit-width]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[--print-empty] [--noindent] [--prefix PREFIX]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--network <network> [--description <description>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--device <device-id>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--mac-address <mac-address>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--device-owner <device-owner>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--vnic-type <vnic-type>] [--host <host-id>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--dns-name dns-name]</p>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--fixed-ip subnet=<subnet>,ip-address=<ip-address>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--binding-profile <binding-profile>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--enable | --disable] [--project <project>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--project-domain <project-domain>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--security-group <security-group> | --no-security-group]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--qos-policy <qos-policy>]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--enable-port-security | --disable-port-security]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--allowed-address ip-address=<ip-address>[,mac-address=<mac-address>]]<br>
+<p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--tag <tag> | --no-tag]<br>
+<br>
+<p style="text-align:left;">--vnic-type <vnic-type><br>
+<p style="text-align:left;">VNIC type for this port (direct | direct-physical | macvtap | normal | baremetal, default: normal)</p>
+
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             <name>
+
+
+</font>									 
+                                        <aside class="notes">                                      
+<p>Test</p>                                        
+								</aside>
+                                </section>                                
+
+<!––  SlideX ––>
+                                <section>
+<font size="-0.5">					 
+<p>root@FPA1066GX-DA2:~# ovs-appctl  dpif/dump-flows br0</p>  
+<p>in_port(14),eth(src=68:05:ca:91:36:b5,dst=68:05:ca:91:36:b5),eth_type(0x0800),ipv4(src=192.168.0.1,dst=192.168.1.1,proto=6),</p>                                        
+<p>tcp(src=1234,dst=5678), packets:0, bytes:0, used:7.340s, actions:<b><font color="red">drop</font></b></p>  
+</font>	                                                                       									
+                                        <aside class="notes">                                      
+<p>Yeah, I chucked this in just as an example of what it means to play with non-commercial NICs, can you spot the problem?</p>                                        
+								</aside>
+                                </section>
+                                                                
 
 <!––  Slide11 ––>
                                 <section> Performance
@@ -329,7 +423,7 @@ XDP  (eXpress Data Path) is a component in the kernel that can be used for fast 
 XDP (eXpress Data Path) is shipped with the kernel since version 4.8 and it is enabled by default, with CONFIG_BPF_SYSCALL.
 
 
-To check if XDP it is enabled in the kernel, it's as simply as grepping for it in the kernel config file 
+To check if XDP it is enabled in the kernel, it's as simple as grepping for it in the kernel config file 
 
 ┌─(ecrehar@elxahkpv4m2:pts/5)────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(~/Downloads)─┐
 └─(15:09:%)── grep CONFIG_BPF_SYSCALL /boot/config-4.15.0-46-generic                                                                                                                                                 ──(mån,06.03)─┘
