@@ -36,8 +36,8 @@
 				<section>
 			        <img src="pics/slide1.png" width=70% height=70%></th>
 				    <aside class="notes">
-<p>So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.</p>p>
-<p>I work at Ericsson as a systems manager. That's *systems* manager, so ... </p>p>
+<p>So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.</p>
+<p>I work at Ericsson as a systems manager. That's *systems* manager, so ... </p>
 				    </aside>
 				</section>
 <!––  Slide2 ––>				
@@ -231,57 +231,20 @@ This is needed so that neutron ovs agent can configure the OVS running on the sm
 
 We can have neutron ovs agent running locally on the smartNIC or remotely and manages the OVS bridges for all baremetal smartNICs.
 
-In ironic
-Steps: 
-(https://specs.openstack.org/openstack/neutron-specs/specs/stein/neutron-ovs-agent-support-baremetal-with-smart-nic.html)
-1. Create Neutron port with smart-nic vnic_type , this is done in Neutron OVS ML2 driver 
-2. local_link_information wiht info like smartNIC hostname , port ID, ssh public key, ovsdb ssl certificate
-
-Picture on the slide with vnic-type 
-root@cic-1:~# openstack  port create
-usage: openstack port create [-h] [-f {json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--fit-width]
-                             [--print-empty] [--noindent] [--prefix PREFIX]
-                             --network <network> [--description <description>]
-                             [--device <device-id>]
-                             [--mac-address <mac-address>]
-                             [--device-owner <device-owner>]
-                             [--vnic-type <vnic-type>] [--host <host-id>]
-                             [--dns-name dns-name]
-                             [--fixed-ip subnet=<subnet>,ip-address=<ip-address>]
-                             [--binding-profile <binding-profile>]
-                             [--enable | --disable] [--project <project>]
-                             [--project-domain <project-domain>]
-                             [--security-group <security-group> | --no-security-group]
-                             [--qos-policy <qos-policy>]
-                             [--enable-port-security | --disable-port-security]
-                             [--allowed-address ip-address=<ip-address>[,mac-address=<mac-address>]]
-                             [--tag <tag> | --no-tag]
-                             <name>
---vnic-type <vnic-type>
-VNIC type for this port (direct | direct-physical | macvtap | normal | baremetal, default: normal)
-
 There are many interesting questions raised, like how do you know which smartNIC hostname belongs to which server.
 Ovs 
-
 
 Ironic
 Is Openstack ready to use smartNICs?
 In Openstack we need to manage the smartNICs that are running full(y fledged) operating system inside the card.
 
-
 Nova: 
 The smartNICs can do packet processing inside the NIC so in order to support this hw acceleration, nova needs some changes. 
 
- 
-
 Openstack Cybborg
 
-										
 Some smartNIC vendors might use native virtio driver while others use proprietary drivers.
-
-
-		
+	
 https://specs.openstack.org/openstack/nova-specs/specs/pike/implemented/netronome-smartnic-enablement.html
 									
 Openstack working with SmartNICs - TO BE ADDED
@@ -317,27 +280,15 @@ Openstack Cyborg for integrating FPGAs with openstack - TO BE ADDED
 <p style="text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--tag <tag> | --no-tag]<br>
 <br>
 <p style="text-align:left;">--vnic-type <vnic-type><br>
-<p style="text-align:left;">VNIC type for this port (direct | direct-physical | macvtap | normal | baremetal, default: normal)</p>
-
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             
-                             <name>
-
-
+<p style="text-align:left;">VNIC type for this port (direct | direct-physical | macvtap | normal | baremetal, default: normal)</p>                         
+                    
 </font>									 
                                         <aside class="notes">                                      
-<p>Test</p>                                        
+In ironic
+Steps: 
+(https://specs.openstack.org/openstack/neutron-specs/specs/stein/neutron-ovs-agent-support-baremetal-with-smart-nic.html)
+1. Create Neutron port with smart-nic vnic_type , this is done in Neutron OVS ML2 driver 
+2. local_link_information wiht info like smartNIC hostname , port ID, ssh public key, ovsdb ssl certificate                                    
 								</aside>
                                 </section>                                
 
