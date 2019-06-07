@@ -29,7 +29,11 @@
 				<section><p><b>In the NIC of time</b></p>
 				<p>Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs<p/>
                                     <aside class="notes">
-                                        Thank you, Daniel, for the (nice? warm?) introduction.
+Thank you, Daniel, for the introduction.
+<br><br>How many people heard about smartNICs
+<br>XDP?
+<br>BPF?
+<br>Openstack?
                                     </aside>
 				</section>
 <!––  Slide1 ––>
@@ -65,13 +69,13 @@ or this ... - advance to next slide -
 <!––  Slide5 ––>			
 				<section>
 					<tr>
-					    <th><img src="pics/slide5_erlang.jpg" width=44% height=44%></th> 
-					    <th><img src="pics/slide5_bluetooth.png" width=25% height=25%></th>
-					</tr>
-					<tr>
 					<p>
 					    <th>40% of all mobile traffic data</th>	
-					</p>
+					</p>						
+
+					</tr>
+					<tr>
+					    <th><img src="pics/slide5_erlang.jpg" width=25% height=25%></th> 
 				        </tr>
 					<aside class="notes">
 If you don't mind, I'd like to tell you a few things about Ericsson. We're NOT making phones! as most of the people think ....
@@ -426,8 +430,12 @@ How do you move a device from kernel space to user space, in case of DPDK?
                                         <aside class="notes">  
 
 Another way to achieve high performance would be partially bypassing the Linux kernel, for example using XDP. 
-XDP  (eXpress Data Path) is a component in the kernel that can be used for fast packet processing. It is an eBPF (I'll get back to explaining what eBPF is) based high performance data path merged in the Linux kernel.
-XDP (eXpress Data Path) is shipped with the kernel since version 4.8 and it is enabled by default, with CONFIG_BPF_SYSCALL.										                                    
+<br>  
+<br>  
+XDP  (eXpress Data Path) is a component in the kernel that can be used for fast packet processing. It is an eBPF (I'll get back to eBPF in a jiffy) based high performance data path merged in the Linux kernel.
+<br>  
+<br>  
+XDP is shipped with the kernel since version 4.8 and it is enabled by default, with CONFIG_BPF_SYSCALL.										                                    
                                        
 								</aside>
                                 </section>
@@ -448,6 +456,8 @@ XDP (eXpress Data Path) is shipped with the kernel since version 4.8 and it is e
 </font>	
                                         <aside class="notes"> 										
 To check if XDP it is enabled in the kernel, it's as simple as grepping for it in the kernel config file 
+<br>  
+<br>  
 The Linux kernel configuration item CONFIG_XDP_SOCKETS:       
 								</aside>
                                 </section>
@@ -457,29 +467,37 @@ The Linux kernel configuration item CONFIG_XDP_SOCKETS:
                                                 <img src="pics/kernel-diag-ascii.svg" width=35% height=35%>
                                         </p>                                 
                                         <aside class="notes"> 
-PICTURE OF XDP 
 
-So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack
-XDP operates directly on the packet buffer. (packets are moved into sockets , decision taken 20 years ago, and this is not the fastest way)
-
+So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack. It is a programale layer in the kernel network stack.
+<br>  
+XDP operates directly on the packet buffer.
+20 or 25 years ago 
+ (packets are moved into sockets , decision taken 20 years ago, and this is not the fastest way)
+<br>  
+<br>
 DPDK steals the whole NIC, we dont do that with XDP , not taking the whole NIC.
+<br>  
 a filter on receive but zero copy to user space 
-
-
+<br>  
+<br>
 XDP can be used in two ways:
-first mode 
+<br>  
 Native mode XDP , a driver hook , before memory allocation , small no of instructions executed before we start processing packets
+<br>  
 limited number of drivers that support XDP 
-
-second mode 
+<br>  
+<br>
 generic mode
+<br>  
 works on any net device , driver independent , but larger number of instructions executed which mean lower performance than native mode, when it comes to packet processing
-
+<br>  
+<br>  
 dataplane which is inside the kernel 
+<br>  
 control plane in user space which is done from eBPF, userspace load eBPF program , everything goes through the BPF-syscall
-
-the Native way is the way to go 
-XDP driver hook 
+<br>  
+the Native way is the way to go , using the XDP driver hook 
+<br>  
 						                                     
                                        
 								</aside>
