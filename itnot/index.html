@@ -30,7 +30,7 @@
 				<p>Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs<p/>
                                     <aside class="notes">
 Thank you, Daniel, for the introduction.
-<br><br>How many people heard about 
+<br><br>How many people are familiar with
 <br>smartNICs
 <br>XDP?
 <br>BPF?
@@ -73,19 +73,18 @@ or this ... - advance to next slide -
 					<p>
 					    <th>40% of all mobile traffic data</th>	
 					</p>						
-
 					</tr>
 					<tr>
 					    <th><img src="pics/slide5_erlang.jpg" width=25% height=25%></th> 
 				        </tr>
 					<aside class="notes">
-If you don't mind, I'd like to tell you a few things about Ericsson. We're NOT making phones! as most of the people think ....
-I can tell you that no matter where you are in the world, when you are connected to a mobile network and you access the internet, there is a high chance that your traffic goes through our stuff, radio base stations, servers running ericsson software etc...
-40% of all mobile traffic world wide goes through our stuff.
-
-And since we are at an Openstack meetup and talking about open source, it is probably good to mention that Ericsson has given to open source Erlang (Ericsson Language, or named after a Danish mathematician, whichever you prefer)
-In Openstack, RabbitMQ uses Erlang.
-Bluetooth comes from Ericsson too ...
+If you don't mind, I'd like to tell you a few things about Ericsson. 
+<br>We're NOT making phones! some people still think that we are ...
+<br>I can tell you that no matter where you are in the world, when you are connected to a mobile network and you access the internet, there is a high chance that your traffic goes through our stuff, radio base stations, servers running ericsson software etc...
+<br>40% of all mobile traffic world wide goes through our stuff.
+<br>
+<br>And since we are at an Openstack meetup and talking about open source, it is probably good to mention that Ericsson has given to open source Erlang (Ericsson Language, or named after a Danish mathematician, whichever you prefer)
+<br>Erland is widely used and in Openstack, RabbitMQ uses Erlang.
 					</aside>
 				</section>
 <!––  Slide6 ––>	
@@ -99,12 +98,16 @@ Bluetooth comes from Ericsson too ...
 
 					<aside class="notes">
 At Ericsson, we use OpenStack for virtual infrastructure management, as part of our NFVi solution. 
-Our customers are typically telecom operators ... well, and a taxi company ... in Dubai ... and Panasonic Avionics for entertainment on board of flights, and many other such examples. 
-What is NFVi? 
-For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
-NFVi is part of the NFV framework and it means, more or less, decoupling the SW from HW for network nodes using virtualization. It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
-Traces of this decoupling of the network functions from proprietary hardware appliances are there for many years now. 
-Around the year 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
+<br>Our customers are typically telecom operators ... well, and a taxi company ... in Dubai ... and Panasonic Avionics for entertainment on board of flights, and many other such examples. 
+<br>
+<br>What is NFVi? 
+<br>For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
+<br>NFVi is part of the NFV framework and it means, more or less, decoupling the SW from HW for network nodes using virtualization. 
+<br>It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
+<br>
+<br>Traces of this decoupling of the network functions from proprietary hardware appliances have been there for many years now. 
+<br>Around 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. 
+<br>Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
 
 
 - advance to next slide - 
@@ -116,14 +119,15 @@ Around the year 2003, I worked in an ISP. We used Cisco routers to do BGP with c
 <p><b>EPC</b> to the rescue</p>										 
                                         <aside class="notes">                                      
 
-Some applications require high throughput and Ericsson's EPC is one notable example.
-EPC is the equivalent of formerly used GPRS, it is there to make mobile data traffic possible. It means you traverse it when surfing the internet from your mobile, or when watching youtube, Netflix, GoT, playing Pokemon?
-According to Ericsson Mobility Report, the monthly mobile data traffic grew close to 88% between Q4 2017 and Q4 2018, this is mainly due to the increased traffic per smartphone in China. 
+<br>According to Ericsson Mobility Report, the monthly mobile data traffic increased to 88% between Q4 2017 and Q4 2018, this is mainly increasing traffic per smartphone in China. 
 According to the same report, mobile traffic is 50% video today and it will increase to 75% video in 2020, driven by, amongst others, AR/VR applications. 
-
-This increase in number of devices using the mobile network and the traffic generated by them, it boils down to EPC will need to handle all this traffic.
-How to cope with this in a performant way, well, maybe smartNICs could have the answer.  
-gtp tunnel to EPC VMs , descapsulate traffic inside the VM                                       
+<br>
+<br>EPC is handling all this traffic.
+<br>EPC is the equivalent of formerly used GPRS, it is there to make mobile data traffic possible. 
+<br>It means you traverse it when surfing the internet from your mobile, when watching youtube, Netflix, GoT, playing Pokemon?
+<br>
+<br> I work at E/// with infrastructure, so EPC people ask us for ways to solve this increasing traffic problem. How to cope with this amounts of traffic in a performant way?
+<br>We think smartNIC can be the answer.                                    
 								</aside>
                                 </section>
 
@@ -476,7 +480,7 @@ The network stack in the kernel is conceived to be slow. There was a decision ta
 This is not the fastest way, maybe you don't need to deliver all packets to sockets, think if you need to drop some of these packets for instance. 
 <br>  
 <br>
-While DPDK steals the whole NIC from linux kernel, XDP does not still the NIC from the server. In XDP we put in a filter per receive queue, make decisions on the packets with zero copy to userspace. This way all the fun features in kernel are available. 
+While DPDK steals the whole NIC from linux kernel, XDP does not still the NIC from the kernel. In XDP we put in a filter per receive queue, make decisions on the packets with zero copy to userspace. This way all the fun features in kernel are available. 
 <br>  
 <br>
 XDP can be used in two modes: native mode, generic (SKB) mode
