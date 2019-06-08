@@ -30,7 +30,8 @@
 				<p>Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs<p/>
                                     <aside class="notes">
 Thank you, Daniel, for the introduction.
-<br><br>How many people heard about smartNICs
+<br><br>How many people heard about 
+<br>smartNICs
 <br>XDP?
 <br>BPF?
 <br>Openstack?
@@ -455,7 +456,7 @@ XDP is shipped with the kernel since version 4.8 and it is enabled by default, w
                                                                                                                                                     
 </font>	
                                         <aside class="notes"> 										
-To check if XDP it is enabled in the kernel, it's as simple as grepping for it in the kernel config file 
+To check if XDP is enabled in the kernel, it's as simple as grepping for it in the kernel config file 
 <br>  
 <br>  
 The Linux kernel configuration item CONFIG_XDP_SOCKETS:       
@@ -468,37 +469,37 @@ The Linux kernel configuration item CONFIG_XDP_SOCKETS:
                                         </p>                                 
                                         <aside class="notes"> 
 
-So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack. It is a programale layer in the kernel network stack.
+So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack in the linux kernel. It is a programmable layer in the kernel network stack.
 <br>  
-XDP operates directly on the packet buffer.
-20 or 25 years ago 
- (packets are moved into sockets , decision taken 20 years ago, and this is not the fastest way)
-<br>  
-<br>
-DPDK steals the whole NIC, we dont do that with XDP , not taking the whole NIC.
-<br>  
-a filter on receive but zero copy to user space 
+XDP operates at the same level as DPDK, directly on the packet buffers, operating on the packet before it is moved to socket buffer. 
+The network stack in the kernel is conceived to be slow. There was a decision taken 20 or 25 years go, that packets should be delivered into sockets. 
+This is not the fastest way, maybe you don't need to deliver all packets to sockets, think if you need to drop some of these packets for instance. 
 <br>  
 <br>
-XDP can be used in two ways:
-<br>  
-Native mode XDP , a driver hook , before memory allocation , small no of instructions executed before we start processing packets
-<br>  
-limited number of drivers that support XDP 
+While DPDK steals the whole NIC from linux kernel, XDP does not still the NIC from the server. In XDP we put in a filter per receive queue, make decisions on the packets with zero copy to userspace. This way all the fun features in kernel are available. 
 <br>  
 <br>
-generic mode
+XDP can be used in two modes: native mode, generic (SKB) mode
 <br>  
-works on any net device , driver independent , but larger number of instructions executed which mean lower performance than native mode, when it comes to packet processing
+Native mode XDP (process packet right after DMA, just before SKB allocation), a driver hook , before memory allocation , small no of instructions executed before we start processing packets
+<br>  
+Limited because we need support for XDP in the driver, but higher performance mode.
+<br>  
+<br>
+Generic mode
+<br>  
+IT happens after DMA and SKB allocation, it means a larger number of instructions is executed before doing something with that packet, so this means significantly lower performance than native mode.
+Works on any NIC device, driver independent. 
 <br>  
 <br>  
-dataplane which is inside the kernel 
+You can look at XDP and BPF with a dataplane/controlplane approach.
+XDP is the dataplane which is inside the kernel 
+
 <br>  
-control plane in user space which is done from eBPF, userspace load eBPF program , everything goes through the BPF-syscall
+BPF is the control plane in user space, userspace load eBPF program.
 <br>  
-the Native way is the way to go , using the XDP driver hook 
 <br>  
-						                                     
+(spanning tree daemon uses BPF to filter only BPDUs are comming on that socket)						                                     
                                        
 								</aside>
                                 </section>                                                                
