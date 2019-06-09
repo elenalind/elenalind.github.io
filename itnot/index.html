@@ -49,7 +49,7 @@ Thank you, Daniel, for the introduction.
 				<section>
 			        <img src="pics/slide2_meeting.jpg" width=70% height=70%></th>
 				    <aside class="notes">
-... not this ... - advance to next slide - 
+... not this ... 
 
 				    </aside>
 				</section>
@@ -57,14 +57,14 @@ Thank you, Daniel, for the introduction.
 				<section>
 			        <img src="pics/slide3_HDS.jpg" width=70% height=70%></th>
 					<aside class="notes">
-but this ... - advance to next slide - 
+but this ...
 					</aside>
 				</section>
 <!––  Slide4 ––>	
 				<section>
 			        <img src="pics/slide3_datacenter.jpg" width=70% height=70%></th>
 					<aside class="notes">
-or this ... - advance to next slide - 
+or this ...
 					</aside>
 				</section>		
 <!––  Slide5 ––>			
@@ -108,9 +108,6 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 <br>Traces of this decoupling of the network functions from proprietary hardware appliances have been there for many years now. 
 <br>Around 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. 
 <br>Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
-
-
-- advance to next slide - 
 					</aside>
 				</section>
 <!––  SlideX ––>
@@ -137,12 +134,14 @@ According to the same report, mobile traffic is 50% video today and it will incr
 					    <th><img src="pics/slide7_smartNIC.png" width=100% height=100%></th>
 					</tr>
 					<aside class="notes">
-This is how a smartNIC looks like !
+This is how a smartNIC looks like!
 
-To cope with this increase in traffic, we are looking at using smartNICs in Openstack on top of which we run vEPC in VMs. 
-What is a smartNIC?
-A smartNIC is a NIC capable of offloading processing from the host CPU. To be able to do this, it can have its own CPU, memory and flash storage embedded on the card. 
-To offload processing from CPU, a smartNIC will, for instance, run the ovs control and data plane, a firewall or performance acceleration techniques, *inside* the NIC. (That is, you will run your ovs-vsctl show commands while logged in to the NIC). - advance to next slide - 
+<br>To cope with this increase in traffic, we are looking at using smartNICs in Openstack on top of which we run vEPC in VMs. 
+<br>
+<br>What is a smartNIC?
+<br>A smartNIC is a NIC capable of offloading processing from the host CPU. To be able to do this, it can have its own CPU, memory and flash storage embedded on the card. 
+<br>To offload processing from the CPU, a smartNIC will, for instance, run the ovs control and data plane, a firewall or performance acceleration, *inside* the NIC. 
+<br>This means, you will run your ovs-vsctl show commands while logged in to the NIC
 					</aside>
 				</section>				
 <!––  Slide8 ––>
@@ -157,16 +156,16 @@ To offload processing from CPU, a smartNIC will, for instance, run the ovs contr
                                         </tr>                                        
                                         <aside class="notes">
 There are quite a few types of smartNICs, ranging from thousands to a few hundred dollars(some you can buy on eBay).
-
-Some smartNICs use an FPGA (Field Programmable Gate Array) mounted on the PCIe network card. Using FPGA boards provides flexibility, they can be easily programmed and updated once installed. (P4-Programmable Protocol-independent Packet Processor- can be used for programming packet forwarding planes.)
-
-Some smartNICs do not use an FPGA, and are ASIC based instead, they are less flexible but still capable of doing lots of things, at a significantly lower price. 
-
-SmartNICs might use ARM CPUs in a RISC architecure or x86 CPUs, different amounts of RAM, they can consume more or less power.
-SmartNICs can have different form factors HHHL(half hight half lenght) if you need to fit it in a 2Us compute  or FHFL full hight full lenght for wider than 2Us computes.
-
-You can opt for 2 or 4 X 25, 4X 50, 2 X 100 Gbps ports, that is two ports (cages) on a NIC wifh HHHL form factor and  4 ports on NICs with FHFL form factor. 
-You have options around the number of PCI lanes to be used, x8 or x16.  - advance to next slide - 
+<br>Some smartNICs use an FPGA (Field Programmable Gate Array) mounted on the PCIe network card. Using FPGA boards provides flexibility, they can be easily programmed and updated once installed. (P4-Programmable Protocol-independent Packet Processor- can be used for programming packet forwarding planes.)
+<br>
+<br>Some smartNICs do not use an FPGA, and are ASIC based instead, they are less flexible but still capable of doing lots of things, at a significantly lower price. 
+<br>
+<br>SmartNICs might use ARM CPUs in a RISC architecure (the kind of HW you have on your *smart*phone) or x86 CPUs, different amounts of RAM, they can consume more or less power.
+<br>
+<br>SmartNICs can have different form factors HHHL(half hight half lenght) if you need to fit it in a 2Us compute  or FHFL full hight full lenght for wider than 2Us computes.
+<br>
+<br>You can opt for 2 or 4 X 25, 4X 50, 2 X 100 Gbps ports, that is two ports (cages) on a NIC wifh HHHL form factor and  4 ports on NICs with FHFL form factor. 
+<br>You have options around the number of PCI lanes to be used, x8 or x16.  
                                         </aside>
                                 </section>
 
@@ -180,15 +179,14 @@ You have options around the number of PCI lanes to be used, x8 or x16.  - advanc
 
                                         <aside class="notes">
 How should your architecture look like when using smartNICs.
-<br><br>
-You could use one smartNIC for data per compute, we're talking 2x100 Gbps here, that's *a lot* of bandwidth.
+<br>
+<br>You could use one smartNIC for data per compute, we're talking 2x100 Gbps here, that's *a lot* of bandwidth.
 In this case, high availability happens at compute level, not at network card level. 
 <br><br>
 What if you have a dual socket system. If you plug a smartNIC in a PCIe socket, applications might not like crossing that QPI link (from 2017 called UPI) between the CPUs.
 In this case you can look into using a bifurcated smartNIC, that's basically splitting the card in two physical pieces that you can insert in two PCIe slots, one per NUMA node.
 <br><br>
 If you use two smartNICs, do you want two separate ovs controllers in your compute? will OpenStack even support that? 
-
                                         </aside>
                                 </section>
                                 
@@ -196,16 +194,18 @@ If you use two smartNICs, do you want two separate ovs controllers in your compu
                                 <section>
                                         <tr>
 					 <p>What is this smartNIC, anyway?</p>
-					 <p>Is it an embedded linux, is it a linux mini server?</p>
-					 
+					 <p>Is it an embedded linux? Is it a linux mini server?</p>					 
                                         </tr>
                                         <aside class="notes">
 
 What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini server?
-Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux on them. Then you need something like IPMI, we're talking rather something like a linux server here than an embedded linux. 
-
-What security concerns are raised with introducing a smartNIC with linux running on it. I'm looking at you, Kim!
-
+<br>
+<br>If you see it as embedded linux, then to upgrade the "FW" you would run an agent on the compute to do this. Is that good enough if you have many such smartNICs in your deployment?
+<br>
+<br>Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux with ovs patches on them?
+<br>Then you need something like IPMI, hence it's something resembeling a linux server here than an embedded linux. 
+<br>
+<br>What security concerns are raised with introducing a smartNIC with linux running on it. I'm looking at you, Kim!
                                         </aside>
                                 </section>                                
 <!––  Slide9 ––>
@@ -218,9 +218,8 @@ What security concerns are raised with introducing a smartNIC with linux running
                                         <aside class="notes">
 
 When should you use a smartNIC?
-(Intel info) If on your host you use more than 4CPUs for OVS, then you should switch to using smartNICs, it makes sense from a business point of view. 
-(Also, smartNIC is a good idea if you need low latency and don't care so much about migration)
-- advance to next slide - 
+<br>(Intel info) If on your host you use more than 4CPUs for OVS, then you should switch to using smartNICs, it makes sense from a business point of view. 
+<br>(Also, smartNIC is a good idea if you need low latency and don't care so much about migration)
                                         </aside>
                                 </section>
 <!––  SlideX ––>
@@ -229,16 +228,10 @@ When should you use a smartNIC?
                                             <th><img src="pics/cpuisol1.png" width=90% height=90%></th>
                                         </tr>                                        
                                         <aside class="notes">                                      
-Here you can see the CPUs allocated to ovs under nohz_full ( confirmed with /etc/default PMDs)
-
-Did you have this problem? Poor dimensioned compute (customer cannot aproximate how many VMs it will run on a compute to properly dimension mem for host OS to take be sufficent for device emulation), runs out of mem , oom killer takes down ovs and with it all VMs? with ovs in the NIC this will not happen, of course you need to properly dimension your system anyway. 
-
-nohz_full=cpulist
-The nohz_full parameter is used to treat a list of CPUs differently, with respect to timer ticks. If a CPU is listed as a nohz_full CPU and there is only one runnable task on the CPU, then the kernel will stop sending timer ticks to that CPU, so more time may be spent running the application and less time spent servicing interrupts and context switching.
-https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7/html/tuning_guide/isolating_cpus_using_tuned-profiles-realtime
-
-2 for hostOS
-2 + threads for ovs
+Here comes an example where you can see the CPUs allocated to ovs under nohz_full ( confirmed with /etc/default/ovs-dpdk PMDs). If ovs is running on that CPU, the kernel will stop sending timer ticks to that CPU, running ovs rather than servicing interrupts and context switching. (but from my experience this works to a certain degree).
+<br>
+<br>Here's one interesting example: on a poor dimensioned compute (where you're running many VMs and did not take into account that you need to reserve resources for device emulation for each VM, *on the host OS side*), if you run out of mem , oom killer will take down your ovs and with it shutting down all your VMs? With ovs in the NIC this will not happen, but of course you still need to properly dimension your system!!
+<br>
 								</aside>
                                 </section>
 
@@ -248,8 +241,7 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_
                                             <th><img src="pics/cpuisol.png" width=99% height=99%></th>
                                         </tr>                                        
                                         <aside class="notes">                                      
-2 for hostOS
-4 + threads for ovs
+Here comes another example for a high performance ovs compute, with more CPUs assigned to ovs.
 								</aside>
                                 </section>
 
@@ -263,16 +255,17 @@ https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_
                                         </tr>
                                                                         
                                         <aside class="notes">
-											Openstack working with SmartNICs 
-Now the question is where are we in Openstack when it comes to integrating the wide range of smartNICs appearing on the market?
-Work is done in several Openstack projects, like ironic, nova and neutron of course.	
-
-For instance when it comes to neutron, we need changes in the Neutron OVS driver and Neutron OVS agent in order to bind the Neutron port for the baremetal host with the smartNIC.
-This is needed so that neutron ovs agent can configure the OVS running on the smartNIC.
-
-We can have neutron ovs agent running locally on the smartNIC or remotely and manages the OVS bridges for all baremetal smartNICs.
-
-There are many interesting questions raised, like how do you know which smartNIC hostname belongs to which server.
+Now the question is where are we in Openstack when it comes to integrating the wide range of smartNICs popping up on the market?
+<br>
+<br>Work is done in several Openstack projects, like ironic, nova, neutron and cyborg.
+<br>
+<br>For instance when it comes to neutron, we need changes in the Neutron OVS driver and Neutron OVS agent in order to bind the Neutron port for the baremetal host with the smartNIC.
+<br>This is needed so that neutron ovs agent can configure the OVS running on the smartNIC.
+<br>
+<br>We can have neutron ovs agent running locally on the smartNIC or remotely and manages the OVS bridges for all baremetal smartNICs. (well, good luck with that)
+<br>
+<br>
+There are many interesting questions raised, like how do you know which smartNIC belongs to which server, in ironic we configure hostname and ssh keys 
 Ovs 
 
 Ironic
@@ -497,16 +490,38 @@ Works on any NIC device, driver independent.
 <br>  
 <br>  
 You can look at XDP and BPF with a dataplane/controlplane approach.
-XDP is the dataplane which is inside the kernel 
 
 <br>  
-BPF is the control plane in user space, userspace load eBPF program.
+The dataplane is in the kernel and the control plane is in the userspace, where userspace load eBPF program.
 <br>  
 <br>  
 (spanning tree daemon uses BPF to filter only BPDUs are comming on that socket)						                                     
+
+
+
                                        
 								</aside>
-                                </section>                                                                
+                                </section>     
+<!––  SlideX ––>
+                                <section> 
+<p>XDP_DROP</p>
+<p>XDP_PASS</p>
+<p>XDP_TX</p>
+<p>XDP_ABORTED</p>
+<p>XDP_REDIRECT</p>
+
+                                        <aside class="notes">                                      
+Thse are actions that can be executed on a packet
+<br><br> DROP is awesome, useful for DDOS, fb uses it heavily and cloudflare
+<br><br> PASS it lets the packet pass, after packet inspection, this does not do DPDK , light weight as you program it , lets the packet go back to stack 
+<br><br> TX send it immedietly back out on the port that it was received, for load balancer cases for example 
+<br><br> ABORTED basically drop but what is extra is that you will get some log about it , useful for debugging for sysadmin or developer
+<br><br> REDIRECT to another port, to other CPUs, you can modify headers on the packet (TX and REDIRECT similar to the DPDK ones)
+XDP DROP PASS TX 	.....fb user it for DDOS 
+no support for jumbo frames in XDP                                       
+								</aside>
+                                </section>
+                                                                                           
 <!––  SlideX ––>
                                 <section> 
 <p>eBPF is a superpower</p>                                  
@@ -515,28 +530,17 @@ What the heck is eBPF ?
 eBPF stands for "enhanced Berkeley Packet Filter" it's a linux kernel technology that is used by e.g. tcpdump and other analysis tools.
 eBPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or exploring running software.
 eBPF is basically like a superpower.
-BPF was initially used for tools like tcpdump but  Alexei Starovoitov introduced eBPF to be used  for things like to NATing, routing, doing what iptables does for example.
-
-
-
-Jumping between kernel space and user space cost on performance - TO BE ADDED
-Mention eBPF with XDP kernel hook,  DPDK, etc .. TO BE ADDED 
-Native VirtIO driver benefits - TO BE ADDED
-- advance to next slide - 	    			                                       
+BPF was initially used for tools like tcpdump but  Alexei Starovoitov introduced eBPF to be used  for things like to NATing, routing, doing what iptables does for example.  			                                       
 								</aside>
                                 </section>
+
 <!––  SlideX ––>
                                 <section> 
-<p>SlideX</p>                                  
+                                        <tr>
+                                            <th><img src="pics/bpf2.png" width=99% height=99%></th>
+                                        </tr>                                    
                                         <aside class="notes">                                      
-                                       
-								</aside>
-                                </section>
-<!––  SlideX ––>
-                                <section> 
-<p>SlideX</p>                                  
-                                        <aside class="notes">                                      
-                                       
+This assembly instructions set, this is BPF.                                       
 								</aside>
                                 </section>
 <!––  SlideX ––>
