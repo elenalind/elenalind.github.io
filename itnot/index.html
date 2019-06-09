@@ -328,25 +328,22 @@ Update the Neutron ml2 OVS to bind smart-nic vnic_type with binding:profile smar
 <p>Kernel Space vs User Space</p>
 
                                         <aside class="notes">
-											
-
+										
 If you care about latency and packet processing performance there are a few options. 
-
+<br><br>
 We basically need to overcome the limitations in the Linux kernel which is not ideal for *lots* of packet-processing.
-
+<br><br>
 Why is the Linux kernel a problem when we talk about latency and performance ( with performance, I mean higher throughput at a lower CPU cost)? 
-Well, the Linux kernel is monolithic, it's millions of lines of code.
-It contains lots of things like drivers (which makes the Linux kernel work with any hw, not just your specific hw/smartNIC), it allows running many applications at the same time by using a time sharing layer. Resources like CPU, mem exposed by the kernel are shared between all the processes running.
+<br>Well, the Linux kernel is monolithic, it's millions of lines of code.
+<br>It contains lots of things like drivers (which makes the Linux kernel work with any hw, not just your specific hw/smartNIC), it allows running many applications at the same time by using a time sharing layer. Resources like CPU, mem exposed by the kernel are shared between all the processes running.
+<br><br>The networking stack inside the Linux kernel limits how many packets per second it can process, it was conceived to be slow, a decision taken 20 25 years ago, that packets should be delivered into sockets. If you want to be fast you dont do this upfront. 
+<br><br>Too many packets per second means CPUs get busy just receiving packets, then either the packets are dropped or we CPU starve the applications.
 
-The networking stack inside the Linux kernel limits how many packets per second it can process, it was conceived to be slow, a decision taken 20 25 years ago, that packets should be delivered into sockets. If you want to be fast you dont do this upfront. 
-Too many packets per second means CPUs get busy just receiving packets, then either the packets are dropped or we CPU starve the applications.
-
-
-
-<!––  TAKE IT OUT this paragraph or rephrase it ––>
-How your operating system deals with data
-Data destined to a particular system is first received by the NIC and is stored in the ring buffer of the reception (RX) present in the NIC, which also has TX (for data transmission). Once the packet is accessible to the kernel, the device driver raises softirq (software interrupt), which makes the DMA (data memory access) of the system send that packet to the Linux kernel. The packet data in the Linux kernel gets stored in the sk_buff data structure to hold the packet up to MTU (maximum transfer unit). When all the packets are filled in the kernel buffer, they get sent to the upper processing layer – IP, TCP or UDP. The data then gets copied to the preferred data receiving process.
-Note: Initially, a hard interrupt is raised by the device driver to send data to the kernel, but since this is an expensive task, it is replaced by a software interrupt. This is handled by the NAPI (new API), which makes the processing of incoming packets more efficient by putting the device driver in polling mode.
+<br><br>
+When a packet comes in, it is stored in the RX ring buffer. The device driver sends a software interrrupt to the kernel. The packet gets stored in sk_buff to be hold up to MTU.
+<br> When all packets are received, they get sent to higher in the kernel stack. Then they get copied to the receiving process.
+<br><br>
+Note: Initially, a hard interrupt is used followed by sw interrupts.
                                         </aside>
                                 </section>
 
