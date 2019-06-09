@@ -353,23 +353,19 @@ Note: Initially, a hard interrupt is used followed by sw interrupts.
 <p>Kernel bypass with DPDK</p>                                  
                                         <aside class="notes">
 To get better performance, one can choose to bypass the kernel, fully or partially.
-There are several kernel bypass options like: 
-DPDK, (that would be the poster child of kernel bypass)
-Snabbswitch, 
-PF_RING, 
-Netmap. (I am personally more familiar with DPDK.)
+<br><br>There are several kernel bypass options like: 
+<br>DPDK, (that would be the poster child of kernel bypass)
+<br>Snabbswitch, 
+<br>PF_RING, 
+<br>Netmap. (I am personally more familiar with DPDK.)
+<br><br>With kernel bypass, we move the NIC to the user-space.
+<br>If the NIC is managed in the user-space, it means we skip things like context switching, networking layer processing, interrupts that happen in the kernel, IRQ storms and do the packet-processing in the user-space.
+<br><br>This is relevant at 10Gbps already. EPC today saturates 200Gbps already. 
 
-
-With kernel bypass, we move the NIC to the user-space.
-If the NIC is managed in the user-space, it means we skip things like context switching, networking layer processing, interrupts that happen in the kernel aka IRQ storms and do the packet-processing in the user-space.
-This is relevant at 10Gbps already. EPC today saturates 200Gbps already. 
-
-NUMA awareness together with CPU isolation needs to be considered as well if we need high performance. 
-Remember this is particularly interesting when using smartNICs, with a dual socket system using one smartNIC plugged in on PCIe slot, corresponding to one NUMA socket.
-
+<br><br>NUMA awareness together with CPU isolation needs to be considered as well if we need high performance. 
+<br><br>
 Moving to userspace means losing the abstraction level the kernel provides for e.g. hw resources, it means you need to load own driver.
-Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now. (like the whole TCP stack)										                                      
-                                       
+<br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
 								</aside>
                                 </section>
 
@@ -405,7 +401,7 @@ How do you move a device from kernel space to user space, in case of DPDK?
 <p>XDP and eBPF</p>                                  
                                         <aside class="notes">  
 
-Another way to achieve high performance would be partially bypassing the Linux kernel, for example using XDP. 
+Another way to achieve high performance would be partially bypassing the Linux kernel, for example using XDP. Well I don't fully agree XDP is really "partial" kernel bypass.
 <br>  
 <br>  
 XDP  (eXpress Data Path) is a component in the kernel that can be used for fast packet processing. It is an eBPF (I'll get back to eBPF in a jiffy) based high performance data path merged in the Linux kernel.
