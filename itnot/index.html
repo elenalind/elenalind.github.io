@@ -265,28 +265,9 @@ Now the question is where are we in Openstack when it comes to integrating the w
 <br>We can have neutron ovs agent running locally on the smartNIC or remotely and manages the OVS bridges for all baremetal smartNICs. (well, good luck with that)
 <br>
 <br>
-There are many interesting questions raised, like how do you know which smartNIC belongs to which server, in ironic we configure hostname and ssh keys 
-Ovs 
+There are many interesting questions raised, like how do you know which smartNIC belongs to which server, in ironic we configure hostname and ssh keys...
+<br><br>Openstack Cybborg works with providing managementAPIs to work with acceleration resources, like FPGA.
 
-Ironic
-Is Openstack ready to use smartNICs?
-In Openstack we need to manage the smartNICs that are running full(y fledged) operating system inside the card.
-
-Nova: 
-The smartNICs can do packet processing inside the NIC so in order to support this hw acceleration, nova needs some changes. 
-
-Openstack Cybborg
-
-Some smartNIC vendors might use native virtio driver while others use proprietary drivers.
-	
-https://specs.openstack.org/openstack/nova-specs/specs/pike/implemented/netronome-smartnic-enablement.html
-									
-Openstack working with SmartNICs - TO BE ADDED
-Openstack support for smartNICs starting with Rocky, Stein - TO BE ADDED
-Neutron integration with SmartNICs - TO BE ADDED
-Openstack Cyborg for integrating FPGAs with openstack - TO BE ADDED
-
-- advance to next slide - 
                                         </aside>
                                 </section>
 
