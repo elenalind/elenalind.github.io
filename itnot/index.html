@@ -563,21 +563,18 @@ This assembly instructions set, this is BPF.
 <!––  Slide12 ––>
                                 <section> smartNICs with Storage
                                         <aside class="notes">
-I talked mostly about the data traffic so far and using smartNICs with the data traffic.
-smartNICs make sense in a lot of cases, storage, video, big data, security. In the storage case, they can be used to be used to accelerate storage apps and security, like encrypting data on the disk.
-Using smartNICs with NVMeOF you can disagrate compute from storage and you can get local storage performance across the network, that is very close performance between local storage and remote storage. Basically you attach a block device to your VM and acessing it is as fast as if it was local.
-NVMeOF maintains the high performance of a local nvme SSD. 
-
-Many applications moving to cloud today are probably not in high demand of high speed access to disks, because they were written for HDDs to begin with. 
-But in the future for sure 																																																																																																																																																																																																																																																																																																			
-smartNICs with Storage - TO BE ADDED
-Using smartNICs for NVMe termination
-NVMe ov TCP , Roce v2
-- advance to next slide - 
+<br>I talked mostly about the data traffic so far and using smartNICs with the data traffic.
+<br><br>smartNICs make sense in a lot of cases, storage, video, big data, security. In the storage case, they can be used to be used to accelerate storage apps and security, like encrypting data on the disk.
+<br>Using smartNICs with NVMeOF you can disagrate compute from storage and you can get local storage performance across the network, that is very close performance between local storage and remote storage. 
+<br>Basically you attach a block device to your VM and acessing it is as fast as if it was local.
+<br>NVMeOF maintains the high performance of a local nvme SSD. 
+<br><br>Many applications moving to cloud today are probably not in high demand of high number of IOPS, because they were written for HDDs to begin with. 
+<br>But smartNICs with storage will be relevant in the  future.
+																																																																						
                                         </aside>
                                 </section>
 <!––  Slide13 ––>
-                                <section> Ericsson customers are running on Openstack. 
+                                <section> Ericsson customers that are running on Openstack. 
                                         <aside class="notes">
 List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
 - advance to next slide - 
@@ -599,72 +596,19 @@ List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
 <br>Datacenters today?
 <br>Stacked up "desktop" computers filled with ... air? 
                                         <aside class="notes">
-2. Secondly, it's my desire to leave you with a thought. 
-I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
-In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
+<br>Secondly, it's my desire to leave you with a thought. 
+<br>I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
+<br><br>In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
 Many customers asked to move their web servers and mail servers on our premises.
-It was because their services would access directly the big pipe and we had a generator. 2001 Eastern European country meant many power outages,
+It was because their services would access directly the big pipe and we had a generator. 2001 Eastern Europe meant lots of power outages ... daily.
 
-They would bring desktop tower PCs we had a room with tables against the wall and we lined up the towers on these tables. Soon enough, we ran out of physical space on those tables and bought racks. We asked customers to buy rackable servers in order to host with us, then we ran out of space again and somewhere 2005 we started using VMs. 
+<br><br>They would bring desktop tower PCs we had a room with tables against the wall and we lined up the towers on these tables. Soon enough, we ran out of physical space on those tables and bought racks. We asked customers to buy rackable servers in order to host with us, then we ran out of space again and somewhere 2005 we started using VMs. 
 Fast forward, today our datacenters are collections of those stacked boxes that used to be desktop computers. To me, this is insane, does it make any sense to you? Should we go down the timeline of computer history and have racks of disks and racks of memory and CPU and racks of NICs?
 - advance to next slide -
                                         </aside>
                                 </section>
 
-<!––  SlideX ––>
-                                <section> 
-<p>Demo</p>                                  
-                                        <aside class="notes">                                      
-1. e.g. dc348 show cpu allocation cpu_layout.py
-2. dc348 show lshw -C network -businfo on normal compute to show the driver for the card
-3. show driver for smartNIC native virtio 
-4. ebpf exercise 
-								</aside>
-                                </section>
 
-
-<!––  SlideX ––>	
-				<section> To DELETE
-					<tr>
-					    <th><img src="pics/slide8_intel-ericsson-logo.jpg" width=100% height=100%></th>
-					</tr>
-					<aside class="notes">
-					At Ericsson,
-					</aside>
-				</section>
-<!––  SlideX ––>	
-                <section data-background-color="#FFC0CB">To DELETE
-                                        <tr>
-                                            <th><img src="pics/me.jpg" width=27% height=27%></th>
-                                            <th><img src="pics/j.jpg" width=35% height=35%></th>
-                                        </tr>
-				</section>
-                <section data-background-color="#FFC0CB">To DELETE
-                                        <p>
-					 DPDK/SPDK
-                                        </p>
-                </section>
-                <section data-background-color="#FFC0CB" >To DELETE
-                                        <p>
-                                                <img src="pics/sn.png" width=75% height=75%>
-
-                                        </p>    
-               </section> 
-               <section data-background-color="#FFC0CB" >To DELETE
-                                        <p>
-                                                <img src="pics/kernel-diag-ascii.svg" width=35% height=35%>
-                                        </p>
-               </section> 
-               <section data-background-color="#FFC0CB">To DELETE
-                                        <p>
-                                           PCI bifurcation
-                                        </p>
-               </section>
-               <section data-background-color="#FFC0CB">To DELETE
-                                        <p>
-                                                <img src="pics/termtosvg_5xxaxp7l.svg" width=60% height=60%>        
-                                        </p>
-				</section>
 			</div>
 		</div>
 
