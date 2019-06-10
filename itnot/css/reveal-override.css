@@ -1,0 +1,16 @@
+/* This file is linked from index.html, and should include any CSS
+   overrides that you want to apply to your selected reveal.js
+   "white" theme.
+*/
+.reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  text-transform: none;
+}
+.reveal .hidden {
+  display: none !important;
+}
+.reveal section img {
+  border: none;
+  box-shadow: none;
+}
+
+/*# sourceMappingURL=reveal-override.css.map */
