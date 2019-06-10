@@ -368,7 +368,22 @@ Moving to userspace means losing the abstraction level the kernel provides for e
 <br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
 								</aside>
                                 </section>
+<!––  SlideX ––>
+                                <section> 
+									
+<p>DPDK is great except ...</p>                                  
+                                        <aside class="notes">
+Moving the NIC in user space and skipping the kernel entirely, has some disadvantages:
+<br><br>You need to manage the driver from user space 
+<br><br>You loose the useful network stuff in the linux kernel (like you cant use ethtool to check the link on an interface, to say the least )
+<br><br>Programs are sandboxed which makes integration with other parts of the OS hard
 
+<br><br>NUMA awareness together with CPU isolation needs to be considered as well if we need high performance. 
+<br><br>
+Moving to userspace means losing the abstraction level the kernel provides for e.g. hw resources, it means you need to load own driver.
+<br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
+								</aside>
+                                </section>
 <!––  SlideX ––>
                                 <section> 
 
