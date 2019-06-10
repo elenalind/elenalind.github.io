@@ -456,8 +456,8 @@ The Linux kernel configuration item CONFIG_XDP_SOCKETS:
 
 So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack in the linux kernel. It is a programmable layer in the kernel network stack.
 <br>  
-XDP operates at the same level as DPDK, directly on the packet buffers, operating on the packet before it is moved to socket buffer. 
-The network stack in the kernel is conceived to be slow. There was a decision taken 20 or 25 years go, that packets should be delivered into sockets. 
+XDP operates at the same level as DPDK, directly on the packet buffers, operating on the packet before it is moved to the socket buffer. 
+The network stack in the kernel was conceived to be slow. There was a decision taken 20 or 25 years go, that packets should be delivered into sockets. 
 This is not the fastest way, maybe you don't need to deliver all packets to sockets, think if you need to drop some of these packets for instance. 
 <br>  
 <br>
@@ -515,7 +515,7 @@ These are actions that can be executed on a packet (that's the stuff you need to
                                         <aside class="notes">                                      
 What the heck is eBPF ?
 <br><br>BPF stands for  "Berkeley Packet Filter" it's a linux kernel technology that is used by e.g. tcpdump and other analysis tools.
-<br><br>eBPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or exploring running software.
+<br><br>eBPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or troubleshooting/exploring running software.
 <br><br>BPF is basically a superpower.
 <br><br>BPF was initially used for tools like tcpdump but Alexei Starovoitov introduced eBPF (extended BPF) to be used  for things like NATing, routing, doing what iptables does for example.  			                                       
 								</aside>
@@ -536,7 +536,6 @@ This assembly instructions set, this is BPF.
                                         <aside class="notes">                                      
  You can safely and easily modify kernel behaviour. 
  
-With DPDK you jump between kernel and user space, with XDP BPF, zero copy to user space.                                     
 								</aside>
                                 </section>
 <!––  SlideX ––>
@@ -553,20 +552,28 @@ With DPDK you jump between kernel and user space, with XDP BPF, zero copy to use
                                 <section> smartNICs with Storage
                                         <aside class="notes">
 <br>I talked mostly about the data traffic so far and using smartNICs with the data traffic.
-<br><br>smartNICs make sense in a lot of cases, storage, video, big data, security. In the storage case, they can be used to be used to accelerate storage apps and security, like encrypting data on the disk.
+<br><br>smartNICs make sense in a lot of cases, storage, video, big data, security. In the storage case, they can be used to accelerate storage apps and security, like encrypting data on the disk.
 <br>Using smartNICs with NVMeOF you can disagrate compute from storage and you can get local storage performance across the network, that is very close performance between local storage and remote storage. 
 <br>Basically you attach a block device to your VM and acessing it is as fast as if it was local.
 <br>NVMeOF maintains the high performance of a local nvme SSD. 
 <br><br>Many applications moving to cloud today are probably not in high demand of high number of IOPS, because they were written for HDDs to begin with. 
 <br>But smartNICs with storage will be relevant in the  future.
-																																																																						
                                         </aside>
                                 </section>
 <!––  Slide13 ––>
-                                <section> Ericsson customers that are running on Openstack. 
+                                <section> Ericsson customers running on Openstack. 
+                                        <tr>
+                                            <th><img src="pics/ol.png" width=29% height=29%></th>
+                                        </tr>                                    
                                         <aside class="notes">
-List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
-- advance to next slide - 
+Telstra operator in Australia
+https://www.ericsson.com/en/press-releases/2016/2/telstra-deploys-ericsson-telecom-cloud-in-full-stack
+Taxi company in Dubai, RTA 
+https://www.ericsson.com/en/press-releases/2017/3/dubais-road-and-transport-authority-chooses-ericsson-to-transform-its-transportation-system
+Panasonic (mention I was on site and some fun facts with that)
+https://www.panasonic.aero/whats-new/press-releases/ericsson-panasonic-5g-ready-platform/
+
+
                                         </aside>
                                 </section>
 <!––  Slide14 ––>
