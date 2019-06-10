@@ -375,14 +375,12 @@ Moving to userspace means losing the abstraction level the kernel provides for e
 .. you need to reinvent the wheel ...                               
                                         <aside class="notes">
 Moving the NIC in user space and skipping the kernel entirely, has some disadvantages:
-<br><br>You need to manage the driver from user space 
+<br><br>You need to manage the driver from user space 'cause you lose the abstraction level the kernel provides
 <br><br>You loose the useful network stuff in the linux kernel (like you cant use ethtool to check the link on an interface, to say the least )
 <br><br>Programs are sandboxed which makes integration with other parts of the OS hard
 
-<br><br>NUMA awareness together with CPU isolation needs to be considered as well if we need high performance. 
-<br><br>
-Moving to userspace means losing the abstraction level the kernel provides for e.g. hw resources, it means you need to load own driver.
-<br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
+<br><br>NUMA awareness together with CPU isolation needs to be considered as well if we need high performance with DPDK.
+										                                                                            
 								</aside>
                                 </section>
 <!––  SlideX ––>
@@ -501,7 +499,7 @@ The dataplane is in the kernel and the control plane is in the userspace, where 
 <p>XDP_REDIRECT</p>
 
                                         <aside class="notes">                                      
-Thse are actions that can be executed on a packet
+These are actions that can be executed on a packet (that's the stuff you need to have in the NIC driver to support XDP)
 <br><br> DROP is awesome, useful for DDOS, fb uses it heavily and cloudflare
 <br><br> PASS it lets the packet pass, after packet inspection, this does not do DPDK , light weight as you program it , lets the packet go back to stack 
 <br><br> TX send it immedietly back out on the port that it was received, for load balancer cases for example 
