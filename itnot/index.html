@@ -106,7 +106,7 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 <br>It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
 <br> Basically, you can run it on Intel HW, 'cause that's so much better ... meltdown ... spectre ... zombieload 
 <br>
-<br>Traces of this decoupling of the network functions from proprietary hardware appliances have been there for many years now. 
+<br>Traces of this decoupling of the network functions from proprietary hardware have been there for many years now. 
 <br>Around 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. 
 <br>Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
 					</aside>
@@ -185,7 +185,7 @@ There are quite a few types of smartNICs, ranging from thousands to a few hundre
 <br>You could use one smartNIC for data per compute, we're talking 2x100 Gbps here, that's *a lot* of bandwidth.
 In this case, high availability happens at compute level, not at network card level. 
 <br><br>
-What if you have a dual socket system. If you plug a smartNIC in a PCIe socket, applications might not like crossing that QPI link (from 2017 called UPI) between the CPUs.
+What if you have a dual socket system. If you plug a smartNIC in a PCIe slot, applications might not like crossing that QPI link (from 2017 called UPI) between the CPUs.
 In this case you can look into using a bifurcated smartNIC, that's basically splitting the card in two physical pieces that you can insert in two PCIe slots, one per NUMA node.
 <br><br>
 If you use two smartNICs, do you want two separate ovs controllers in your compute? will OpenStack even support that? 
@@ -335,8 +335,6 @@ If you care about latency and packet processing performance there are a few opti
 We basically need to overcome the limitations in the Linux kernel which is not ideal for *lots* of packet-processing.
 <br><br>
 Why is the Linux kernel a problem when we talk about latency and performance ( with performance, I mean higher throughput at a lower CPU cost)? 
-<br>Well, the Linux kernel is monolithic, it's millions of lines of code.
-<br>It contains lots of things like drivers (which makes the Linux kernel work with any hw, not just your specific hw/smartNIC), it allows running many applications at the same time by using a time sharing layer. Resources like CPU, mem exposed by the kernel are shared between all the processes running.
 <br><br>The networking stack inside the Linux kernel limits how many packets per second it can process, it was conceived to be slow, a decision taken 20 25 years ago, that packets should be delivered into sockets. If you want to be fast you dont do this upfront. 
 <br><br>Too many packets per second means CPUs get busy just receiving packets, then either the packets are dropped or we CPU starve the applications.
 
