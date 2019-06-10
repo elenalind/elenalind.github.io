@@ -456,11 +456,9 @@ The Linux kernel configuration item CONFIG_XDP_SOCKETS:
 So XDP is a hook in the Linux kernel, not a kernel bypass but a bypass of the network stack in the linux kernel. It is a programmable layer in the kernel network stack.
 <br>  
 XDP operates at the same level as DPDK, directly on the packet buffers, operating on the packet before it is moved to the socket buffer. 
-The network stack in the kernel was conceived to be slow. There was a decision taken 20 or 25 years go, that packets should be delivered into sockets. 
-This is not the fastest way, maybe you don't need to deliver all packets to sockets, think if you need to drop some of these packets for instance. 
 <br>  
 <br>
-While DPDK steals the whole NIC from linux kernel, XDP does not still the NIC from the kernel. In XDP we put in a filter per receive queue, make decisions on the packets with zero copy to userspace. This way all the fun features in kernel are available. 
+While DPDK steals the whole NIC from linux kernel, XDP does not steal the NIC from the kernel. In XDP we put in a filter per receive queue, make decisions on the packets with zero copy to userspace. This way all the fun features in kernel are available. 
 <br>  
 <br>
 XDP can be used in two modes: native mode, generic (SKB) mode
@@ -514,7 +512,7 @@ These are actions that can be executed on a packet (that's the stuff you need to
                                         <aside class="notes">                                      
 What the heck is eBPF ?
 <br><br>BPF stands for  "Berkeley Packet Filter" it's a linux kernel technology that is used by e.g. tcpdump and other analysis tools.
-<br><br>eBPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or troubleshooting/exploring running software.
+<br><br>BPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or troubleshooting/exploring running software.
 <br><br>BPF is basically a superpower.
 <br><br>BPF was initially used for tools like tcpdump but Alexei Starovoitov introduced eBPF (extended BPF) to be used  for things like NATing, routing, doing what iptables does for example.  			                                       
 								</aside>
@@ -522,6 +520,8 @@ What the heck is eBPF ?
 
 <!––  SlideX ––>
                                 <section> 
+									<p>This is BPF!</p>
+
                                         <tr>
                                             <th><img src="pics/bpf2.png" width=99% height=99%></th>
                                         </tr>                                    
@@ -579,9 +579,9 @@ This assembly instructions set, this is BPF.
 
 </div>                                                                               
                                         <aside class="notes">
-Telstra - em linux and python story
-Panasonic - fuel legacy/uefi
-Telefonica - Orange France - HA story
+Telstra - linux and python story<br>
+Panasonic - legacy/uefi<br>
+Telefonica - Orange France - HA story<br>
 	
                                         </aside>
                                 </section>
@@ -605,7 +605,8 @@ Telefonica - Orange France - HA story
 <br>Stacked up "desktop" computers filled with ... air? 
                                         <aside class="notes">
 <br>Secondly, it's my desire to leave you with a thought. 
-<br>I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. I enjoy this path of questioning everything, why do we do things a certain way. 
+<br>I came to the realization that most of the things we learn are provisional and in consequence they are open to recantation and refutation. (I have been raised in an eastern europe communist country and been lied to a significant part of my life).
+<br> I enjoy this path of questioning everything, why do we do things a certain way. 
 <br><br>In 2001 my first job was sysadmin working for a big Eastern European Internet Service Provider
 <br>Many customers asked to move their web servers and mail servers on our premises.
 <br>It was because their services would access directly the big pipe and we had a generator. 2001 Eastern Europe meant lots of power outages ... daily.
