@@ -26,7 +26,7 @@
 		<div class="reveal">
 			<div class="slides">
 				
-<!––  Slide0 ––>				
+<!--  Slide0 -->				
 				<section><p><b>In the NIC of time</b></p>
 				<p>Enabling high-performance edge applications with OpenStack, OVS, and SmartNICs<p/>
                                     <aside class="notes">
@@ -38,7 +38,7 @@ Hello everyone, trying quickly to assess my audience here today.
 <br>Openstack?
                                     </aside>
 				</section>
-<!––  Slide1 ––>
+<!--  Slide1 -->
 				<section>
 			        <img src="pics/slide1.png" class="stretch"></th>
 				    <aside class="notes">
@@ -46,7 +46,7 @@ Hello everyone, trying quickly to assess my audience here today.
 <p>I work at Ericsson as a systems manager. That's *systems* manager, so ... </p>
 				    </aside>
 				</section>
-<!––  Slide2 ––>				
+<!--  Slide2 -->				
 				<section>
 			        <img src="pics/slide2_meeting.jpg" class="stretch"></th>
 				    <aside class="notes">
@@ -54,21 +54,21 @@ Hello everyone, trying quickly to assess my audience here today.
 
 				    </aside>
 				</section>
-<!––  Slide3 ––>	
+<!--  Slide3 -->	
 				<section>
 			        <img src="pics/slide3_HDS.jpg" class="stretch"></th>
 					<aside class="notes">
 but this ...
 					</aside>
 				</section>
-<!––  Slide4 ––>	
+<!--  Slide4 -->	
 				<section>
 			        <img src="pics/slide3_datacenter.jpg" class="stretch"></th>
 					<aside class="notes">
 or this ...
 					</aside>
 				</section>		
-<!––  Slide5 ––>			
+<!--  Slide5 -->			
 				<section>
 					<tr>
 					<p>
@@ -88,7 +88,7 @@ If you don't mind, I'd like to tell you a few things about Ericsson.
 <br>Erlang is widely used and in Openstack, RabbitMQ uses Erlang.
 					</aside>
 				</section>
-<!––  Slide6 ––>	
+<!--  Slide6 -->	
 				<section>
 					<tr>
 						<th><img src="pics/slide6_openstack-logo.png" width=34% height=34%></th> 
@@ -111,7 +111,7 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 <br>Fast forward to today, part of SDN, we use opendaylight with Quagga soft router for BGP ( Quagga is what followed after zebra, it is actually an extinct sub-specie of the African zebra.)
 					</aside>
 				</section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 									
 <p><b>88%</b> increase in mobile data traffic  Q4-2017 to Q4-2018</p>
 <p><b>EPC</b> to the rescue</p>										 
@@ -129,7 +129,7 @@ According to the same report, mobile traffic is 50% video today and it will incr
 								</aside>
                                 </section>
 
-<!––  Slide7 ––>	
+<!--  Slide7 -->	
 				<section>
 					<tr>
 					    <th><img src="pics/slide7_smartNIC.png" width=100% height=100%></th>
@@ -145,7 +145,7 @@ This is how a smartNIC looks like!
 <br>This means, you will run your ovs-vsctl show commands while logged in to the NIC
 					</aside>
 				</section>				
-<!––  Slide8 ––>
+<!--  Slide8 -->
                                 <section>
                                         <tr>
                                             <th><img src="pics/slide8_intel.png" width=24% height=24%></th>
@@ -170,7 +170,7 @@ There are quite a few types of smartNICs, ranging from thousands to a few hundre
                                         </aside>
                                 </section>
 
-<!––  Slide9 ––>
+<!--  Slide9 -->
                                 <section>
 									                                        <tr>
 
@@ -192,7 +192,7 @@ If you use two smartNICs, do you want two separate ovs controllers in your compu
                                         </aside>
                                 </section>
                                 
-<!––  Slide9 ––>
+<!--  Slide9 -->
                                 <section>
                                         <tr>
 					 <p>What is this smartNIC, anyway?</p>
@@ -210,7 +210,7 @@ What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini serve
 <br>What security concerns are raised with introducing a smartNIC with linux running on it. I'm looking at you, Kim!
                                         </aside>
                                 </section>                                
-<!––  Slide9 ––>
+<!--  Slide9 -->
                                 <section>
                                         <tr>
 					 <p>When should you use a smartNIC?</p>
@@ -224,7 +224,7 @@ When should you use a smartNIC?
 <br>(Also, smartNIC is a good idea if you need low latency and don't care so much about migration)
                                         </aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
                                         <tr>
                                             <th><img src="pics/cpuisol1.png" width=90% height=90%></th>
@@ -237,7 +237,7 @@ Here comes an example where you can see the CPUs allocated to ovs under nohz_ful
 								</aside>
                                 </section>
 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
                                         <tr>
                                             <th><img src="pics/cpuisol.png" width=99% height=99%></th>
@@ -248,7 +248,7 @@ Here comes another example for a high performance ovs compute, with more CPUs as
                                 </section>
 
                                                                                                 
-<!––  Slide10 ––>
+<!--  Slide10 -->
                                 <section>   <p>Ironic Neutron Cyborg</p>
                                         <tr>
                                             <th><img src="pics/OpenStack_Project_Ironic_mascot.png" width=25% height=25%></th>
@@ -273,7 +273,7 @@ There are many interesting questions raised, like how do you know which smartNIC
                                         </aside>
                                 </section>
 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section>
 <font size="-2">										
 <p style="text-align:left;">root@cic-1:~# openstack  port create<br>                                        
@@ -311,7 +311,7 @@ Update the Neutron ml2 OVS to bind smart-nic vnic_type with binding:profile smar
 								</aside>
                                 </section>                                
 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section>
 <font size="-0.5">					 
 <p style="text-align:left;">root@FPA1066GX-DA2:~# ovs-appctl  dpif/dump-flows br0</p>  
@@ -324,7 +324,7 @@ Update the Neutron ml2 OVS to bind smart-nic vnic_type with binding:profile smar
                                 </section>
                                                                 
 
-<!––  Slide11 ––>
+<!--  Slide11 -->
                                 <section> 
 <p>Performance</p>
 <p>Kernel Space vs User Space</p>
@@ -350,7 +350,7 @@ Note: Initially, a hard interrupt is used followed by sw interrupts.
                                 </section>
 
 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>Kernel bypass with DPDK</p>                                  
                                         <aside class="notes">
@@ -370,7 +370,7 @@ Moving to userspace means losing the abstraction level the kernel provides for e
 <br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 									
 <p>DPDK is great except ...</p>                                  
@@ -386,7 +386,7 @@ Moving to userspace means losing the abstraction level the kernel provides for e
 <br>Moving to userspace means the kernel space is skipped together with the good stuff too like networking functionality that needs to be reimplemented now.										                                                                            
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 
 <font size="-2">										
@@ -413,7 +413,7 @@ Moving to userspace means losing the abstraction level the kernel provides for e
 How do you move a device from kernel space to user space, in case of DPDK?
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>XDP and eBPF</p>                                  
                                         <aside class="notes">  
@@ -429,7 +429,7 @@ XDP is shipped with the kernel since version 4.8 and it is enabled by default, w
 								</aside>
                                 </section>
                                 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <font size="-1">									
 <p style="text-align:left;">$ grep CONFIG_BPF_SYSCALL /boot/config-4.15.0-46-generic</p>                                                                                                                        
@@ -450,7 +450,7 @@ To check if XDP is enabled in the kernel, it's as simple as grepping for it in t
 The Linux kernel configuration item CONFIG_XDP_SOCKETS:       
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
                                         <p>
                                                 <img src="pics/kernel-diag-ascii.svg" width=35% height=35%>
@@ -493,7 +493,7 @@ The dataplane is in the kernel and the control plane is in the userspace, where 
                                        
 								</aside>
                                 </section>     
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>XDP_DROP</p>
 <p>XDP_PASS</p>
@@ -512,7 +512,7 @@ Thse are actions that can be executed on a packet
 								</aside>
                                 </section>
                                                                                            
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>eBPF is a superpower</p>                                  
                                         <aside class="notes">                                      
@@ -524,7 +524,7 @@ What the heck is eBPF ?
 								</aside>
                                 </section>
 
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
                                         <tr>
                                             <th><img src="pics/bpf2.png" width=99% height=99%></th>
@@ -533,7 +533,7 @@ What the heck is eBPF ?
 This assembly instructions set, this is BPF.                                       
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>With eBPF you can basically modify the kernel behaviour</p>                                  
                                         <aside class="notes">                                      
@@ -542,7 +542,7 @@ This assembly instructions set, this is BPF.
 With DPDK you jump between kernel and user space, with XDP BPF, zero copy to user space.                                     
 								</aside>
                                 </section>
-<!––  SlideX ––>
+<!--  SlideX -->
                                 <section> 
 <p>BCC tools</p>                                  
                                         <aside class="notes">                                      
@@ -552,7 +552,7 @@ With DPDK you jump between kernel and user space, with XDP BPF, zero copy to use
                                  
 
 
-<!––  Slide12 ––>
+<!--  Slide12 -->
                                 <section> smartNICs with Storage
                                         <aside class="notes">
 <br>I talked mostly about the data traffic so far and using smartNICs with the data traffic.
@@ -565,14 +565,14 @@ With DPDK you jump between kernel and user space, with XDP BPF, zero copy to use
 																																																																						
                                         </aside>
                                 </section>
-<!––  Slide13 ––>
+<!--  Slide13 -->
                                 <section> Ericsson customers that are running on Openstack. 
                                         <aside class="notes">
 List some operators, the olympics in Japan with docomo, etc - TO BE ADDED
 - advance to next slide - 
                                         </aside>
                                 </section>
-<!––  Slide14 ––>
+<!--  Slide14 -->
                                 <section> 
 <br>Datacenters today?
 <br>Stacked up "desktop" computers filled with ... air? 
