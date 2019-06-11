@@ -503,7 +503,8 @@ These are actions that can be executed on a packet (that's the stuff you need to
 <br><br> TX send it immedietly back out on the port that it was received, for load balancer cases for example 
 <br><br> ABORTED basically drop but what is extra is that you will get some log about it , useful for debugging for sysadmin or developer
 <br><br> REDIRECT to another port, to other CPUs, you can modify headers on the packet (TX and REDIRECT similar to the DPDK ones)
-<br><br>  no support for jumbo frames in XDP                                       
+<br><br> Limitation on support for jumbo frames in XDP , jumbo frames are supported, like 3kB but not 9kframes. Might be a problem for storage?
+(reason why this is a problem "one frame cannot exceed a page" constraint)                                  
 								</aside>
                                 </section>
                                                                                            
@@ -610,6 +611,7 @@ Docomor http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.c
 <br>Thank you:
 <br><a href="https://xahteiwi.eu/">Florian Haas</a>
 <br><a href="https://twitter.com/brendangregg">Berendan Gregg</a>
+<br><a href="https://twitter.com/JesperBrouer">Jesper Dangaard Brouer</a>
 <br><a href="https://twitter.com/alexei_ast">Alexei Starovoitov</a>
 
 
