@@ -40,7 +40,7 @@ Hello everyone, trying quickly to assess my audience here today.
 				</section>
 <!--  Slide1 -->
 				<section>
-			        <img src="pics/slide1.png" class="stretch"></th>
+			        <img src="pics/ecl.png" class="stretch"></th>
 				    <aside class="notes">
 <p>So! Hello everyone, my name is Elena "I won't pronounce" Lindqvist and I am here to tell you about using smartNICs with OpenStack.</p>
 <p>I work at Ericsson as a systems manager. That's *systems* manager, so ... </p>
@@ -104,8 +104,8 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 <br>What is NFVi? 
 <br>For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
 <br>NFVi is part of the NFV framework and it means, more or less, decoupling the SW from HW for network nodes using virtualization. 
-<br>It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Qanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
-<br> Basically, you can run it on Intel HW, 'cause that's so much better ... meltdown ... spectre ... zombieload 
+<br>It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Quanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
+<br> Basically, running telecom applications on Intel HW, 'cause that's so much better ... meltdown ... spectre ... zombieload 
 <br>
 <br>Traces of this decoupling of the network functions from proprietary hardware have been there for many years now. 
 <br>Around 2003, I worked in an ISP. We used Cisco routers to do BGP with customers and the upstream provider. I was in awe when GNU Zebra came out and I could run BGP in a Linux box. 
@@ -515,7 +515,7 @@ These are actions that can be executed on a packet (that's the stuff you need to
 What the heck is eBPF ?
 <br><br>BPF stands for  "Berkeley Packet Filter" it's a linux kernel technology that is used by e.g. tcpdump and other analysis tools.
 <br><br>BPF is used to extract millions of metrics from the kernel and applications for troubleshooting purposes, deep monitoring or troubleshooting/exploring running software.
-<br><br>BPF is basically a superpower.
+<br><br>BPF is basically a superpower! And here's the thing, Google spent hundread of millions USD to market k8s, no one is marketing the linux kernel, so cool stuff like this are not enough advertised. 
 <br><br>BPF was initially used for tools like tcpdump but Alexei Starovoitov introduced eBPF (extended BPF) to be used  for things like NATing, routing, doing what iptables does for example.  			                                       
 								</aside>
                                 </section>
@@ -533,21 +533,19 @@ This assembly instructions set, this is BPF.
                                 </section>
 <!--  SlideX -->
                                 <section> 
-<p>With eBPF you can basically modify the kernel behaviour</p>                                  
+<p>eBPF to modify the kernel behaviour</p>
+                                        <tr>
+                                            <th><img src="pics/bpf-hooks.png" width=79% height=79%></th>
+                                        </tr> 
+<br>                                      
+<p style="text-align:right;"> <font size="-1">Shamefully stolen from </font> <a href="https://twitter.com/alexei_ast"><font size="-1">Alexei</font></a></p>
+                                                                            
                                         <aside class="notes">                                      
  You can safely and easily modify kernel behaviour. 
  
+ 
 								</aside>
                                 </section>
-<!--  SlideX -->
-                                <section> 
-<p>BCC tools</p>                                  
-                                        <aside class="notes">                                      
-                                       
-								</aside>
-                                </section>
-                                 
-
 
 <!--  Slide12 -->
                                 <section> smartNICs with Storage
@@ -575,6 +573,8 @@ This assembly instructions set, this is BPF.
 	                                         <a href="https://www.panasonic.aero/whats-new/press-releases/ericsson-panasonic-5g-ready-platform/">Panasonic</a><br>
                                             <a href="https://www.ericsson.com/en/press-releases/2016/2/swisscom-selects-ericsson-for-telco-cloud-infrastructure-and-nfv-of-core-network-functions">Swisscom</a><br>	  
                                             <a href="https://www.ericsson.com/en/press-releases/2016/2/telefonica-selects-ericsson-for-global-unica-program">Telefonica</a><br>
+                                            <a href="http://www.ntt.co.jp/news2019/1903e/190319a.html">2020 Olympics with </a><a href="Docomo http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.com/en/press-releases/2016/3/ericsson-cloud-platform-enables-successful-launch-of-multi-vendor-nfv-for-ntt-docomo">Docomo </a><br>
+
                                             
     </p>
   </div>
@@ -585,7 +585,7 @@ This assembly instructions set, this is BPF.
 Telstra - linux and python story<br>
 Panasonic - legacy/uefi<br>
 Telefonica - Orange France - HA story<br>
-Docomor http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.com/en/press-releases/2016/3/ericsson-cloud-platform-enables-successful-launch-of-multi-vendor-nfv-for-ntt-docomo
+Docomo http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.com/en/press-releases/2016/3/ericsson-cloud-platform-enables-successful-launch-of-multi-vendor-nfv-for-ntt-docomo
                                         </aside>
                                 </section>
                                         
@@ -610,7 +610,7 @@ Docomor http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.c
                                 <section> 
 <br>Thank you:
 <br><a href="https://xahteiwi.eu/">Florian Haas</a>
-<br><a href="https://twitter.com/brendangregg">Berendan Gregg</a>
+<br><a href="https://twitter.com/brendangregg">Brendan Gregg</a>
 <br><a href="https://twitter.com/JesperBrouer">Jesper Dangaard Brouer</a>
 <br><a href="https://twitter.com/alexei_ast">Alexei Starovoitov</a>
 
