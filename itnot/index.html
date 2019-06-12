@@ -407,7 +407,12 @@ Moving the NIC in user space and skipping the kernel entirely, has some disadvan
                                   
                                         <aside class="notes">
 
-How do you move a device from kernel space to user space, in case of DPDK?
+This is how moving a device from kernel space to user space, in case of DPDK looks like.
+<br><br>We need the hugepages for large memory pool alocation that is used for packet buffers.
+<br>Lower number of memory pages means fewer table lookups, perf increases.
+<br>(shorter time to translate a virtual page address to a physical one)
+<br><br>Load the virti
+
 								</aside>
                                 </section>
 <!--  SlideX -->
@@ -609,10 +614,10 @@ Docomo http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.co
 <!--  Slide14 -->
                                 <section> 
 <br>Thank you:
-<br><a href="https://xahteiwi.eu/">Florian Haas</a>
-<br><a href="https://twitter.com/brendangregg">Brendan Gregg</a>
-<br><a href="https://twitter.com/JesperBrouer">Jesper Dangaard Brouer</a>
-<br><a href="https://twitter.com/alexei_ast">Alexei Starovoitov</a>
+<br><a href="https://xahteiwi.eu/"><font size="5">Florian Haas</font></a>
+<br><a href="https://twitter.com/brendangregg"><font size="5">Brendan Gregg</font></a>
+<br><a href="https://twitter.com/JesperBrouer"><font size="5">Jesper Dangaard Brouer</font></a>
+<br><a href="https://twitter.com/alexei_ast"><font size="5">Alexei Starovoitov</font></a>
 
 
                                         <aside class="notes">
