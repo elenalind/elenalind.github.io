@@ -103,7 +103,7 @@ At Ericsson, we use OpenStack for virtual infrastructure management, as part of 
 <br>
 <br>What is NFVi? 
 <br>For many years at Ericsson, we made SW and HW very dependent on each other. Customers bought whole racks of custom HW and the Ericsson SW applications deployed and running on top of that HW.
-<br>NFVi is part of the NFV framework and it means, more or less, decoupling the SW from HW for network nodes using virtualization. 
+<br>NFVi is part of the NFV framework (a network architecture concept) and it means, more or less, decoupling the SW from HW for network nodes using virtualization. 
 <br>It means you can run the telecom applications(the SW) on any HW (like Dell, HP, Quanta, SuperMicro, Fujitsu servers, whatnot), in VMs or containers.
 <br> Basically, running telecom applications on Intel HW, 'cause that's so much better ... meltdown ... spectre ... zombieload 
 <br>
@@ -201,9 +201,7 @@ If you use two smartNICs, do you want two separate ovs controllers in your compu
                                         </tr>
                                         <aside class="notes">
 
-What is this smartNIC, anyway? Is it an embedded linux, is it a linux mini server?
-<br>
-<br>If you see it as embedded linux, then to upgrade the "FW" you would run an agent on the compute to do this. Is that good enough if you have many such smartNICs in your deployment?
+If you see it as embedded linux, then to upgrade the "FW" you would run an agent on the compute to do this. Is that good enough if you have many such smartNICs in your deployment?
 <br>
 <br>Would you want the possibility to say, in one go, configure all your smartNICs to PXE boot, so you can load a new linux with ovs patches on them?
 <br>Then you need something like IPMI, hence it's something resembeling a linux server here than an embedded linux. 
@@ -627,13 +625,13 @@ Docomo http://www.ntt.co.jp/news2019/1903e/190319a.html, https://www.ericsson.co
 <br>
                                         </aside>
                                 </section>
-<!--  Slide4 -->	
+<!--  Slide4 	
 				<section>
 			        <img src="pics/termtosvg_5xxaxp7l.svg" class="stretch"></th>
 					<aside class="notes">
 					</aside>
 				</section>	
-
+-->
 
 			</div>
 		</div>
