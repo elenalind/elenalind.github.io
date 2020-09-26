@@ -1,5 +1,7 @@
 
-You know nothing, Jon Snow! OpenStack troubleshooting from a beginner's perspective.
+You know nothing, Jon Snow!
+
+OpenStack troubleshooting from a beginner's perspective
 
 * * *
 
@@ -8,11 +10,6 @@ You know nothing, Jon Snow! OpenStack troubleshooting from a beginner's perspect
 * * *
 
 Elena Lindqvist | [@elenalindq](https://twitter.com/elenalindq)
-
-
 <!-- Note -->
-From description _(don’t recite):_
+Hello everyone and welcome to this talk!
 
-> How to tackle troubleshooting an OpenStack problem, from defining
-> the problem, finding and testing a solution, to documenting the
-> solution and sharing it with the world.
