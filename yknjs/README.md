@@ -1,5 +1,5 @@
 # Presentation Title
-You know nothing, Jon Snow! OpenStack troubleshooting from a beginner's perspective.
+You know nothing, Jon Snow! OpenStack troubleshooting from a beginner's perspective
 
 How to tackle troubleshooting an OpenStack problem, from defining the problem, finding and testing a solution, to documenting the solution and sharing it with the world.
 
